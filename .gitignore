@@ -1,0 +1,10 @@
+# Output executables
+a.out
+test_cute
+
+# Object files
+*.o
+lib*.a
+
+# Documentation directory
+doc/
