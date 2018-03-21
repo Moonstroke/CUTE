@@ -22,4 +22,11 @@
 #define CUTE_MEMBER CUTE_NOTNULL(1)
 
 
+
+#if !defined(CUTE_TEST_H) && !defined(CUTE_ASSERT_H)
+#include "cute_assert.h"
+#include "cute_test.h"
+#endif
+
+
 #endif /* CUTE_H */
