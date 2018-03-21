@@ -5,6 +5,7 @@
 #include "cute.h"
 
 
+
 typedef void (CUTE_Proc)(void);
 
 typedef struct {
@@ -15,9 +16,9 @@ typedef struct {
 
 #define CUTE_makeTest(proc) (CUTE_Test){proc, #proc}
 
-#define CUTE_getTestName(test) test->name
+#define CUTE_getTestName(test) test.name
 
-#define CUTE_runTest(test) test->proc()
+#define CUTE_runTest(test) test.proc()
 
 
 #endif /* CUTE_TEST_H */
