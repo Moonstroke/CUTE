@@ -21,4 +21,9 @@ typedef struct {
 #define CUTE_runTest(test) test.proc()
 
 
+
+#include "cute_case.h"
+#include "cute_suite.h"
+
+
 #endif /* CUTE_TEST_H */
