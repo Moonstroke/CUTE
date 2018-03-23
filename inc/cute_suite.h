@@ -41,9 +41,9 @@ CUTE_CTOR CUTE_TestSuite *CUTE_buildTestSuite(unsigned int size, ...);
  *
  * \note The test cases included in the suite are also freed.
  *
- * \param[in] s The test suite
+ * \param[in] suite The test suite
  */
-void CUTE_destroyTestSuite(CUTE_TestSuite *s);
+void CUTE_destroyTestSuite(CUTE_TestSuite *suite);
 
 /**
  * \brief Runs the test suite.
