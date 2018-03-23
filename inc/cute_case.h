@@ -12,7 +12,7 @@
  *       when \c cute_test.h is included.
  */
 #ifndef CUTE_TEST_H
-#error "This file must not be included directly, please include cute_test.h instead"
+#error "This file must not be included directly"
 #endif
 
 
