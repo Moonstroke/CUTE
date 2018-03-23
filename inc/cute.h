@@ -1,5 +1,5 @@
 /**
- * \file cute.h
+ * \file "cute.h"
  * \author joH1
  * \version 0.1
  *
@@ -47,7 +47,7 @@
 #define CUTE_NULL_GUARD(i) __attribute__((__sentinel__(i)))
 
 /**
- * \brief The last argument of the function \i must be an explicit \c NULL.
+ * \brief The last argument of the function \e must be an explicit \c NULL.
  *
  * \note As for \a CUTE_NULL_GUARD, this attribute is only valid on variadic
  *       functions.
