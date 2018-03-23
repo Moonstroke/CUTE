@@ -31,12 +31,21 @@
 #define CUTE_runTimeAssert(cond) assert(cond)
 
 /**
+ * \def CUTE_compileTimeAssert
+ *
  * \brief Evaluates the expression during compilation.
+ *
+ * \note With pre-11 C, this macro is defined with a hacky syntax. In this case,
+ *       the macro can not be used at global scope.
  *
  * \param[in] cond The expression to evaluates
  * \param[in] msg The message to output if the evaluation fails
  */
-#define CUTE_compileTimeAssert(cond, msg) static_assert(cond, msg)
+#if __STDC_VERSION__ >= 201112L /* C11 introduced the static_assert feature */
+# define CUTE_compileTimeAssert(cond, msg) static_assert(cond, msg)
+#else  /* dirty hack for pre-C11 C */
+# define CUTE_compileTimeAssert(cond, msg) do { int _[cond ? -1 : 1]; } while(0)
+#endif
 
 
 /**
