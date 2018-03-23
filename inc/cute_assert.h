@@ -14,7 +14,7 @@
 #define CUTE_ASSERT_H
 
 
-#include <assert.h> /* for assert, static_assert */
+#include <assert.h> /* for assert, static_assert, __assert_fail */
 #include <string.h> /* for strcmp */
 
 #include "cute.h"
@@ -75,5 +75,14 @@
  */
 #define CUTE_assertStringEquals(s1, s2) \
 	CUTE_assertEqualsWith((s1), (s2), strcmp, 0)
+
+
+/**
+ * \brief Fails immediately.
+ *
+ * \param[in] msg A message to print
+ */
+#define CUTE_fail(msg) __assert_fail(msg, __FILE__, __LINE__, __func__)
+
 
 #endif /* CUTE_ASSERT_H */
