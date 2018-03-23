@@ -16,9 +16,6 @@
 #endif
 
 
-#include "cute.h"
-
-
 
 /**
  * \brief An opaque definition of the test suite.

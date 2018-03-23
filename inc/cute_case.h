@@ -18,8 +18,6 @@
 
 #include <stdbool.h> /* for bool, true, false */
 
-#include "cute_test.h"
-
 
 
 /**
