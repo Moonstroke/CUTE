@@ -26,6 +26,9 @@ CUTE_TestSuite *CUTE_buildTestSuite(const unsigned int n, ...) {
 }
 
 void CUTE_destroyTestSuite(CUTE_TestSuite *const ts) {
+	for(unsigned int i = 0; i < ts->size; ++i) {
+		CUTE_freeTestCase(ts->cases[i]);
+	}
 	free(ts);
 }
 

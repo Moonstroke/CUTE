@@ -51,8 +51,6 @@ int main(void) {
 	CUTE_runTestSuite(suite);
 
 
-	CUTE_freeTestCase(case_1);
-	CUTE_freeTestCase(case_2);
 	CUTE_destroyTestSuite(suite);
 	return 0;
 }
