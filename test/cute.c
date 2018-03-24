@@ -87,5 +87,5 @@ void test_abort__f(void) {
 }
 void test_segfault__f(void) {
 	fputs("trigger segmentation fault\n", stderr);
-	"string"[8] = '/';
+	*(int*)NULL = 666;
 }
