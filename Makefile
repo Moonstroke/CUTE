@@ -9,6 +9,7 @@ PROJECT_NAME := cute
 INC_DIR := inc
 SRC_DIR := src
 OBJ_DIR := obj
+TEST_DIR := test
 
 
 # Documentation
@@ -42,12 +43,12 @@ OPTIM_LVL := 2
 TEST_EXEC := test_$(PROJECT_NAME)
 
 # Tests files
-TEST_SRC := $(wildcard $(SRC_DIR)/test*.c)
-TEST_OBJ := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(TEST_SRC))
+TEST_SRC := $(wildcard $(TEST_DIR)/*.c)
+TEST_OBJ := $(patsubst $(TEST_DIR)/%.c,$(OBJ_DIR)/test_%.o,$(TEST_SRC))
 TEST_LOG := test.log
 
 # Project sources and object files
-SRC := $(filter-out $(TEST_SRC), $(wildcard $(SRC_DIR)/*.c))
+SRC := $(wildcard $(SRC_DIR)/*.c)
 OBJ := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # Library archive
@@ -84,6 +85,11 @@ $(AR_LIB): $(OBJ)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	$(CC) -c $< -o$@ $(CFLAGS)
+
+# Tests compilation
+$(OBJ_DIR)/test_%.o: $(TEST_DIR)/%.c
+	@mkdir -p $(OBJ_DIR)
+	$(CC) -c $< -o $@ $(CFLAGS)
 
 
 # Remove compiled files (objects)
