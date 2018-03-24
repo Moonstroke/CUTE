@@ -38,10 +38,10 @@ int main(void) {
 	CUTE_addCaseTest(case_1, test_exit);
 
 	case_2 = CUTE_newTestCase(3);
-	CUTE_setCaseInitiate(case_1, init);
-	CUTE_setCaseTerminate(case_1, term);
-	CUTE_setCaseBefore(case_1, setUp);
-	CUTE_setCaseAfter(case_1, tearDown);
+	CUTE_setCaseInitiate(case_2, init);
+	CUTE_setCaseTerminate(case_2, term);
+	CUTE_setCaseBefore(case_2, setUp);
+	CUTE_setCaseAfter(case_2, tearDown);
 	CUTE_addCaseTest(case_2, test_2);
 	CUTE_addCaseTest(case_2, test_assert);
 	CUTE_addCaseTest(case_2, test_segfault);
