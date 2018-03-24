@@ -1,6 +1,6 @@
 #include "cute.h"
 
-#include <stdio.h> /* for fputs, stderr */
+#include <clog.h>
 #include <stdlib.h> /* for abort */
 #include <string.h> /* for strlen */
 
@@ -19,6 +19,10 @@ static void test_segfault__f(void);
 
 
 int main(void) {
+
+	clog_init(CLOG_FORMAT_TEXT, CLOG_ATTR_COLORED);
+
+
 	CUTE_TestSuite *suite;
 	CUTE_TestCase *case_1, *case_2;
 	CUTE_Test test_1, test_2, test_assert, test_exit, test_segfault;
@@ -56,36 +60,36 @@ int main(void) {
 }
 
 void init(void) {
-	fputs("init\n", stderr);
+	verbose("init");
 }
 void term(void) {
-	fputs("term\n", stderr);
+	verbose("term");
 }
 
 void setUp(void) {
-	fputs("setUp\n", stderr);
+	verbose("setUp");
 }
 void tearDown(void) {
-	fputs("tearDown\n\n", stderr);
+	verbose("tearDown\n");
 }
 
 
 void test_1__f(void) {
-	fputs("test 1 called\n", stderr);
+	info("test 1 called");
 }
 void test_2__f(void) {
-	fputs("test 2 called\n", stderr);
+	info("test 2 called");
 }
 
 void test_assert__f(void) {
-	fputs("failing assertion\n", stderr);
+	error("failing assertion");
 	CUTE_assertEquals(1, 2);
 }
 void test_abort__f(void) {
-	fputs("call abort()\n", stderr);
+	error("call abort()");
 	abort();
 }
 void test_segfault__f(void) {
-	fputs("trigger segmentation fault\n", stderr);
+	error("trigger segmentation fault");
 	*(int*)NULL = 666;
 }
