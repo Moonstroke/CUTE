@@ -1,7 +1,7 @@
 #include "cute.h"
 
 #include <stdio.h> /* for fputs, stderr */
-#include <stdlib.h> /* for exit, EXIT_FAILURE */
+#include <stdlib.h> /* for abort */
 #include <string.h> /* for strlen */
 
 
@@ -14,7 +14,7 @@ static void tearDown(void);
 static void test_1__f(void);
 static void test_2__f(void);
 static void test_assert__f(void);
-static void test_exit__f(void);
+static void test_abort__f(void);
 static void test_segfault__f(void);
 
 
@@ -26,7 +26,7 @@ int main(void) {
 	test_1 = CUTE_makeTest(test_1__f);
 	test_2 = CUTE_makeTest(test_2__f);
 	test_assert = CUTE_makeTest(test_assert__f);
-	test_exit = CUTE_makeTest(test_exit__f);
+	test_exit = CUTE_makeTest(test_abort__f);
 	test_segfault = CUTE_makeTest(test_segfault__f);
 
 	case_1 = CUTE_newTestCase(2);
@@ -81,9 +81,9 @@ void test_assert__f(void) {
 	fputs("CUTE_assertEquals(1, 2)\n", stderr);
 	CUTE_assertEquals(1, 2);
 }
-void test_exit__f(void) {
-	fputs("exit(EXIT_FAILURE)\n", stderr);
-	exit(EXIT_FAILURE);
+void test_abort__f(void) {
+	fputs("abort()\n", stderr);
+	abort();
 }
 void test_segfault__f(void) {
 	fputs("\"string\"[8] = '/'\n", stderr);
