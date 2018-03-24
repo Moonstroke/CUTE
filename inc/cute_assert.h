@@ -14,7 +14,6 @@
 #define CUTE_ASSERT_H
 
 
-#include <assert.h> /* for assert, static_assert, __assert_fail */
 #include <string.h> /* for strcmp */
 
 #include "cute.h"
@@ -28,7 +27,9 @@
  *
  * \param[in] cond The expression to evaluate
  */
-#define CUTE_runTimeAssert(cond) assert(cond)
+#define CUTE_runTimeAssert(cond)\
+	if(cond); else CUTE_fail("Assertion " #cond " failed", __FILE__, __LINE__,
+	                         __func__)
 
 /**
  * \def CUTE_compileTimeAssert
@@ -41,8 +42,8 @@
  * \param[in] cond The expression to evaluates
  * \param[in] msg The message to output if the evaluation fails
  */
-#if __STDC_VERSION__ >= 201112L /* C11 introduced the static_assert feature */
-# define CUTE_compileTimeAssert(cond, msg) static_assert(cond, msg)
+#if __STDC_VERSION__ >= 201112L /* C11 introduced the _Static_assert feature */
+# define CUTE_compileTimeAssert(cond, msg) _Static_assert(cond, msg)
 #else  /* dirty hack for pre-C11 C */
 # define CUTE_compileTimeAssert(cond, msg) do { int _[cond ? -1 : 1]; } while(0)
 #endif
@@ -81,8 +82,11 @@
  * \brief Fails immediately.
  *
  * \param[in] msg A message to print
+ *
+ * \return The function terminates the program execution, it does not return.
  */
-#define CUTE_fail(msg) __assert_fail(msg, __FILE__, __LINE__, __func__)
+CUTE_NORETURN void CUTE_fail(const char *msg, const char *file,
+                             unsigned int line, const char *func);
 
 
 #endif /* CUTE_ASSERT_H */
