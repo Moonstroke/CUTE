@@ -17,7 +17,7 @@
 /**
  * \brief Empty declaration for non-GNU C.
  */
-#define __attribute__(x)
+# define __attribute__(x)
 #endif
 
 /**
@@ -62,9 +62,8 @@
 /**
  * \brief The function is related to a OO-like data type.
  *
- * \note The meaning of this attribute is purely semantic; it actually only
- *       ensures that the first argument, the type instance pointer, is not
- *       \c NULL.
+ * \note The meaning of this attribute is purely semantic; in reality, it only
+ *       ensures that the first argument, the instance pointer, is not \c NULL.
  */
 #define CUTE_MEMBER CUTE_NOTNULL(1)
 
@@ -77,9 +76,10 @@
 #define CUTE_NORETURN __attribute__((__noreturn__))
 
 /**
- * \brief The value returned should be used.
+ * \brief The value returned must be used or stored.
  */
 #define CUTE_NODISCARD __attribute__((__warn_unused_result__))
+
 
 
 #if !defined(CUTE_TEST_H) && !defined(CUTE_ASSERT_H)
