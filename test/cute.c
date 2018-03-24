@@ -78,14 +78,14 @@ void test_2__f(void) {
 }
 
 void test_assert__f(void) {
-	fputs("CUTE_assertEquals(1, 2)\n", stderr);
+	fputs("failing assertion\n", stderr);
 	CUTE_assertEquals(1, 2);
 }
 void test_abort__f(void) {
-	fputs("abort()\n", stderr);
+	fputs("call abort()\n", stderr);
 	abort();
 }
 void test_segfault__f(void) {
-	fputs("\"string\"[8] = '/'\n", stderr);
+	fputs("trigger segmentation fault\n", stderr);
 	"string"[8] = '/';
 }
