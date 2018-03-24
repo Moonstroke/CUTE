@@ -2,7 +2,6 @@
 
 #include <clog.h>
 #include <stdlib.h> /* for abort */
-#include <string.h> /* for strlen */
 
 
 
@@ -21,7 +20,6 @@ static void test_segfault__f(void);
 int main(void) {
 
 	clog_init(CLOG_FORMAT_TEXT, CLOG_ATTR_COLORED);
-
 
 	CUTE_TestSuite *suite;
 	CUTE_TestCase *case_1, *case_2;
