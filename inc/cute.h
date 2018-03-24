@@ -68,6 +68,18 @@
  */
 #define CUTE_MEMBER CUTE_NOTNULL(1)
 
+/**
+ * \brief Implies that the function never returns.
+ *
+ * \note Such a function (like the standard \a exit(3), or \a longjmp(3)) should
+ *       always be declared as \c void.
+ */
+#define CUTE_NORETURN __attribute__((__noreturn__))
+
+/**
+ * \brief The value returned should be used.
+ */
+#define CUTE_NODISCARD __attribute__((__warn_unused_result__))
 
 
 #if !defined(CUTE_TEST_H) && !defined(CUTE_ASSERT_H)
