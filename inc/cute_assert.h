@@ -28,7 +28,7 @@
  * \param[in] cond The expression to evaluate
  */
 #define CUTE_runTimeAssert(cond)\
-	if(cond); else CUTE_fail("Assertion " #cond " failed", __FILE__, __LINE__,
+	if(cond); else CUTE_fail("Assertion " #cond " failed", __FILE__, __LINE__,\
 	                         __func__)
 
 /**
