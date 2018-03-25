@@ -51,14 +51,14 @@ typedef struct {
  *
  * \return The \a name member of the test instance.
  */
-#define CUTE_getTestName(test) test.name
+#define CUTE_getTestName(test) (test).name
 
 /**
  * \brief Runs the test procedure.
  *
  * \param[in] test The test to run
  */
-#define CUTE_runTest(test) test.proc()
+#define CUTE_runTest(test) (test).proc()
 
 
 
