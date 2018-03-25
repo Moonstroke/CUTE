@@ -54,7 +54,7 @@ bool CUTE_addCaseTest(CUTE_TestCase *const tc, CUTE_Test t) {
 	return false;
 }
 
-void CUTE_runTestCase(CUTE_TestCase *const tc) {
+void CUTE_runTestCase(const CUTE_TestCase *const tc) {
 	tc->initiate();
 	for(unsigned int i = 0; i < tc->size; ++i) {
 		tc->before();

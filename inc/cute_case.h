@@ -51,14 +51,16 @@ CUTE_MEMBER void CUTE_freeTestCase(CUTE_TestCase *case_);
  * \param[in,out] case_    The test case
  * \param[in]     initiate The procedure
  */
-CUTE_MEMBER void CUTE_setCaseInitiate(CUTE_TestCase *case_, CUTE_Proc *initiate);
+CUTE_MEMBER CUTE_NOTNULL(2) void CUTE_setCaseInitiate(CUTE_TestCase *case_,
+                                                      CUTE_Proc *initiate);
 /**
  * \brief Specifies the procedure to call after having run all the tests.
  *
  * \param[in,out] case_     The test case
  * \param[in]     terminate The procedure
  */
-CUTE_MEMBER void CUTE_setCaseTerminate(CUTE_TestCase *case_, CUTE_Proc *terminate);
+CUTE_MEMBER CUTE_NOTNULL(2) void CUTE_setCaseTerminate(CUTE_TestCase *case_,
+                                                       CUTE_Proc *terminate);
 
 /**
  * \brief Specifies the procedure to call before every test.
@@ -66,14 +68,16 @@ CUTE_MEMBER void CUTE_setCaseTerminate(CUTE_TestCase *case_, CUTE_Proc *terminat
  * \param[in,out] case_ The test case
  * \param[in]     setUp The procedure
  */
-CUTE_MEMBER void CUTE_setCaseBefore(CUTE_TestCase *case_, CUTE_Proc *setUp);
+CUTE_MEMBER CUTE_NOTNULL(2) void CUTE_setCaseBefore(CUTE_TestCase *case_,
+                                                    CUTE_Proc *setUp);
 /**
  * \brief Specifies the procedure to call after each test.
  *
  * \param[in,out] case_    The test case
  * \param[in]     tearDown The procedure
  */
-CUTE_MEMBER void CUTE_setCaseAfter(CUTE_TestCase *case_, CUTE_Proc *tearDown);
+CUTE_MEMBER CUTE_NOTNULL(2) void CUTE_setCaseAfter(CUTE_TestCase *case_,
+                                                   CUTE_Proc *tearDown);
 
 /**
  * \brief Adds a unit test to the list of tests in the case.
@@ -95,6 +99,6 @@ CUTE_MEMBER bool CUTE_addCaseTest(CUTE_TestCase *case_, CUTE_Test test);
  * \note It is not ensured that the tests are executed in the same order as they
  *       were added to the case.
  *
- * \param[in,out] case_ The test case
+ * \param[in] case_ The test case
  */
-CUTE_MEMBER void CUTE_runTestCase(CUTE_TestCase *case_);
+CUTE_MEMBER void CUTE_runTestCase(const CUTE_TestCase *case_);
