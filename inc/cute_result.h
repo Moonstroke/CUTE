@@ -25,7 +25,6 @@ typedef struct {
 	CUTE_TestResult results[];
 } CUTE_TestCaseOutcome;
 
-void CUTE_prepareOutcome(CUTE_TestCaseOutcome **outcome,
-                         unsigned int number) CUTE_NOTNULL(1);
+CUTE_CTOR CUTE_TestCaseOutcome *CUTE_prepareOutcome(unsigned int number);
 
-void CUTE_cleanUpOutcome(CUTE_TestCaseOutcome *outcome) CUTE_NOTNULL(1);
+CUTE_MEMBER void CUTE_cleanUpOutcome(CUTE_TestCaseOutcome *outcome);
