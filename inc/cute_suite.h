@@ -49,5 +49,7 @@ void CUTE_destroyTestSuite(CUTE_TestSuite *suite);
  * \brief Runs the test suite.
  *
  * \param[in] suite The test suite
+ *
+ * \return An array containing the results of the execution of the tests
  */
-void CUTE_runTestSuite(const CUTE_TestSuite *suite);
+CUTE_TestCaseOutcome **CUTE_runTestSuite(const CUTE_TestSuite *suite);

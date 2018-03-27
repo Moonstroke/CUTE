@@ -58,12 +58,17 @@ unsigned int CUTE_getCaseTestsNumber(CUTE_TestCase *const c) {
 	return c->size;
 }
 
-void CUTE_runTestCase(const CUTE_TestCase *const tc) {
+CUTE_TestCaseOutcome *CUTE_runTestCase(const CUTE_TestCase *const tc) {
+	CUTE_TestCaseOutcome *r = CUTE_prepareOutcome(tc->size);
 	tc->initiate();
 	for(unsigned int i = 0; i < tc->size; ++i) {
 		tc->before();
 		CUTE_runTest(tc->tests[i]);
 		tc->after();
+		r->results[i].name = CUTE_getTestName(tc->tests[i]);
+		r->results[i].result = CUTE_RESULT_SUCCESS;
+		++r->successes;
 	}
 	tc->terminate();
+	return r;
 }

@@ -32,8 +32,12 @@ void CUTE_destroyTestSuite(CUTE_TestSuite *const ts) {
 	free(ts);
 }
 
-void CUTE_runTestSuite(const CUTE_TestSuite *const ts) {
+CUTE_TestCaseOutcome **CUTE_runTestSuite(const CUTE_TestSuite *const ts) {
+	CUTE_TestCaseOutcome **results = malloc(ts->size
+	                                         * sizeof(CUTE_TestCaseOutcome*));
 	for(unsigned int i = 0; i < ts->size; ++i) {
-		CUTE_runTestCase(ts->cases[i]);
+		results[i] = CUTE_runTestCase(ts->cases[i]);
+		// TODO print results from here?
 	}
+	return results;
 }

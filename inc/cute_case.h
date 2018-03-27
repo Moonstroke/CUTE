@@ -110,6 +110,8 @@ CUTE_MEMBER unsigned int CUTE_getCaseTestsNumber(CUTE_TestCase *case_) CUTE_PURE
  * \note It is not ensured that the tests are executed in the same order as they
  *       were added to the case.
  *
- * \param[in] case_ The test case
+ * \param[in]  case_  The test case
+ *
+ * \return A pointer to the results of the tests.
  */
-CUTE_MEMBER void CUTE_runTestCase(const CUTE_TestCase *case_);
+CUTE_MEMBER CUTE_TestCaseOutcome *CUTE_runTestCase(const CUTE_TestCase *case_);
