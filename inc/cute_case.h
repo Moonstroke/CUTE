@@ -93,6 +93,17 @@ CUTE_MEMBER CUTE_NOTNULL(2) void CUTE_setCaseAfter(CUTE_TestCase *case_,
  */
 CUTE_MEMBER bool CUTE_addCaseTest(CUTE_TestCase *case_, CUTE_Test test);
 
+
+/**
+ * \brief Retrieves the number of tests in the case.
+ *
+ * \param[in] case_ The test case
+ *
+ * \return The number of unit tests in the case.
+ */
+CUTE_MEMBER unsigned int CUTE_getCaseTestsNumber(CUTE_TestCase *case_) CUTE_PURE;
+
+
 /**
  * \brief Runs the tests in the case.
  *
