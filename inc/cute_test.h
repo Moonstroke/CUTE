@@ -62,6 +62,7 @@ typedef struct {
 
 
 
+#include "cute_result.h"
 #include "cute_case.h"
 #include "cute_suite.h"
 
