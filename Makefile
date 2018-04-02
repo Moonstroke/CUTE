@@ -55,8 +55,10 @@ OBJ := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC))
 AR_LIB := lib$(PROJECT_NAME).a
 
 
+# Preprocessor flags
+CPPFLAGS := -I$(INC_DIR)
 # Compilation flags
-CFLAGS := -std=c11 -pedantic -Wall -Wextra -Wpadded -O$(OPTIM_LVL) -I$(INC_DIR)
+CFLAGS := -std=c11 -pedantic -Wall -Wextra -Wpadded -O$(OPTIM_LVL)
 ifeq ($(DEBUG), y)
 	CFLAGS += -g
 endif
@@ -84,12 +86,12 @@ $(AR_LIB): $(OBJ)
 # File-wise compilation
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) -c $< -o$@ $(CFLAGS)
+	$(CC) -c $< -o$@ $(CPPFLAGS) $(CFLAGS)
 
 # Tests compilation
 $(OBJ_DIR)/test_%.o: $(TEST_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) -c $< -o $@ $(CFLAGS)
+	$(CC) -c $< -o $@ $(CPPFLAGS) $(CFLAGS)
 
 
 # Remove compiled files (objects)
