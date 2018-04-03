@@ -85,8 +85,8 @@
  *
  * \return The function terminates the program execution, it does not return.
  */
-CUTE_NORETURN void CUTE_fail(const char *msg, const char *file,
-                             unsigned int line, const char *func);
+void CUTE_fail(const char *msg, const char *file, unsigned int line,
+               const char *func);
 
 
 #endif /* CUTE_ASSERT_H */

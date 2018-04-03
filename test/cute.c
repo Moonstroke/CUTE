@@ -1,7 +1,7 @@
 #include "cute.h"
 
 #include <clog.h>
-#include <stdlib.h> /* for abort */
+#include <signal.h> /* for raise, SIGABRT */
 
 
 
@@ -85,7 +85,7 @@ void test_assert__f(void) {
 }
 void test_abort__f(void) {
 	error("call abort()");
-	abort();
+	raise(SIGABRT);
 }
 void test_segfault__f(void) {
 	error("trigger segmentation fault");
