@@ -1,7 +1,6 @@
 #include "cute_test.h"
 
 #include <clog.h> /* for debug */
-#include <setjmp.h> /* for jmp_buf, setjmp, longjmp */
 #include <signal.h> /* for sigaction, struct sigaction, SIG* */
 #include <stdarg.h> /* for va_* */
 #include <stdlib.h> /* for malloc, free, NULL */
@@ -16,47 +15,23 @@ struct testcase {
 };
 
 enum status {
-	STATUS_FAILURE = 1, /* to be non-zero */
-	STATUS_INTERRUPT,
-	STATUS_QUIT,
-	STATUS_CALCERROR,
-	STATUS_SEGFAULT,
-	STATUS_STOPPED
+	STATUS_FAILURE = 1, /* assertion in the test failed. = 1 to be non-zero */
+	STATUS_ERROR, /* error outside of assertion (segfault, zero-division) */
+	STATUS_INTERRUPT /* User cancelled */
 };
 
-static jmp_buf _env;
+static sig_atomic_t _status;
 
 static void _handler(const int signum) {
-	int status;
-	switch(signum) {
-		case SIGABRT: /* failure */
-			debug("abort");
-			status = STATUS_FAILURE;
-			break;
-		case SIGINT: /* keyboard Ctrl-C */
-			debug("interrupt");
-			status = STATUS_INTERRUPT;
-			break;
-		case SIGQUIT: /* keyboard quit, Ctrl-\ */
-			debug("quit");
-			status = STATUS_QUIT;
-			break;
-		case SIGFPE:
-			debug("math error");
-			status = STATUS_CALCERROR;
-			break;
-		case SIGSEGV:
-			debug("segmentation fault");
-			status = STATUS_SEGFAULT;
-			break;
-		case SIGTSTP:
-			debug("terminal stop");
-			status = STATUS_STOPPED;
-			break;
-		default:
-			return;
-	}
-	longjmp(_env, status);
+	static const enum status statutes[32] = {
+		[SIGABRT] = STATUS_FAILURE,
+		[SIGFPE] = STATUS_ERROR,
+		[SIGSEGV] = STATUS_ERROR,
+		[SIGINT] = STATUS_INTERRUPT,
+		[SIGQUIT] = STATUS_INTERRUPT,
+		[SIGTSTP] = STATUS_INTERRUPT
+	};
+	_status = statutes[signum];
 }
 
 #define SET_HANDLER_FOR(signum, sigact) if(!sigaction(signum, &sigact, NULL));\
@@ -121,11 +96,16 @@ void CUTE_runTestCase(const CUTE_TestCase *const tc) {
 	_set_handlers();
 	for(unsigned int i = 0; i < tc->size; ++i) {
 		tc->before();
-		switch(setjmp(_env)) {
-			case 0: /* first return */
-				CUTE_runTest(tc->tests[i]);
-			default: /* jumped from the signal handler */
-				/* TODO use return value of setjmp */
+		CUTE_runTest(tc->tests[i]);
+		switch(_status) {
+			case STATUS_FAILURE:
+				debug("Test failed");
+				break;
+			case STATUS_INTERRUPT:
+				debug("User interruption");
+				break;
+			case STATUS_ERROR:
+				debug("Test error");
 				break;
 		}
 		tc->after();
