@@ -20,7 +20,7 @@ enum status {
 	STATUS_INTERRUPT /* User cancelled */
 };
 
-static sig_atomic_t _status;
+static volatile sig_atomic_t _status;
 
 static void _handler(const int signum) {
 	static const enum status statutes[32] = {
