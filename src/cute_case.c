@@ -26,7 +26,6 @@ static void _handler(const int signum) {
 	static const enum status statutes[32] = {
 		[SIGABRT] = STATUS_FAILURE,
 		[SIGFPE] = STATUS_ERROR,
-		[SIGSEGV] = STATUS_ERROR,
 		[SIGINT] = STATUS_INTERRUPT,
 		[SIGQUIT] = STATUS_INTERRUPT,
 		[SIGTSTP] = STATUS_INTERRUPT
@@ -46,7 +45,6 @@ static void _set_handlers(void) {
 	SET_HANDLER_FOR(SIGINT, act); /* Ctrl-C typed */
 	SET_HANDLER_FOR(SIGQUIT, act); /* keyboard quit, Ctrl-\ (core dump) */
 	SET_HANDLER_FOR(SIGFPE, act); /* floating-point error, or any math error */
-	SET_HANDLER_FOR(SIGSEGV, act); /* segmentation fault */
 	SET_HANDLER_FOR(SIGTSTP, act); /* terminal stop */
 }
 
