@@ -15,8 +15,9 @@ struct testcase {
 };
 
 enum status {
-	STATUS_FAILURE = 1, /* assertion in the test failed. = 1 to be non-zero */
-	STATUS_ERROR, /* error outside of assertion (segfault, zero-division) */
+	STATUS_OK = 0, /* test success */
+	STATUS_FAILURE, /* assertion in the test failed */
+	STATUS_ERROR, /* error outside of assertion (zero-division, int overflow) */
 	STATUS_INTERRUPT /* User cancelled */
 };
 
@@ -94,8 +95,12 @@ void CUTE_runTestCase(const CUTE_TestCase *const tc) {
 	_set_handlers();
 	for(unsigned int i = 0; i < tc->size; ++i) {
 		tc->before();
+		_status = STATUS_OK;
 		CUTE_runTest(tc->tests[i]);
 		switch(_status) {
+			case STATUS_OK:
+				debug("success");
+				break;
 			case STATUS_FAILURE:
 				debug("Test failed");
 				break;
