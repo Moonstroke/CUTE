@@ -24,12 +24,12 @@ int main(void) {
 
 	CUTE_TestSuite *suite;
 	CUTE_TestCase *case_1, *case_2;
-	CUTE_Test test_1, test_2, test_assert, test_exit, test_interrupt, test_quit;
+	CUTE_Test test_1, test_2, test_assert, test_abort, test_interrupt, test_quit;
 
 	test_1 = CUTE_makeTest(test_1__f);
 	test_2 = CUTE_makeTest(test_2__f);
 	test_assert = CUTE_makeTest(test_assert__f);
-	test_exit = CUTE_makeTest(test_abort__f);
+	test_abort = CUTE_makeTest(test_abort__f);
 	test_interrupt = CUTE_makeTest(test_interrupt__f);
 	test_quit = CUTE_makeTest(test_quit__f);
 
@@ -39,7 +39,7 @@ int main(void) {
 	CUTE_setCaseBefore(case_1, setUp);
 	CUTE_setCaseAfter(case_1, tearDown);
 	CUTE_addCaseTest(case_1, test_1);
-	CUTE_addCaseTest(case_1, test_exit);
+	CUTE_addCaseTest(case_1, test_abort);
 	CUTE_addCaseTest(case_1, test_quit);
 
 	case_2 = CUTE_newTestCase(3);
