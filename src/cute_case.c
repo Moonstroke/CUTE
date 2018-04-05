@@ -1,5 +1,7 @@
 #include "cute_test.h"
 
+#include <clog.h> /* for debug */
+#include <signal.h> /* for sigaction, struct sigaction, SIG* */
 #include <stdarg.h> /* for va_* */
 #include <stdlib.h> /* for malloc, free, NULL */
 
@@ -12,6 +14,40 @@ struct testcase {
 	CUTE_Test tests[];
 };
 
+enum status {
+	STATUS_OK = 0, /* test success */
+	STATUS_FAILURE, /* assertion in the test failed */
+	STATUS_ERROR, /* error outside of assertion (zero-division, int overflow) */
+	STATUS_INTERRUPT /* User cancelled */
+};
+
+static volatile sig_atomic_t _status;
+
+static void _handler(const int signum) {
+	static const enum status statutes[32] = {
+		[SIGABRT] = STATUS_FAILURE,
+		[SIGFPE] = STATUS_ERROR,
+		[SIGINT] = STATUS_INTERRUPT,
+		[SIGQUIT] = STATUS_INTERRUPT,
+		[SIGTSTP] = STATUS_INTERRUPT
+	};
+	_status = statutes[signum];
+}
+
+#define SET_HANDLER_FOR(signum, sigact) if(!sigaction(signum, &sigact, NULL));\
+	else { error("Can't handle " #signum); return; }
+
+static void _set_handlers(void) {
+	struct sigaction act;
+	act.sa_handler = _handler; /* function to handle signals */
+	act.sa_flags = 0; /* handler flags (none set) */
+	sigemptyset(&act.sa_mask); /* do not block any signal */
+	SET_HANDLER_FOR(SIGABRT, act); /* abort() called */
+	SET_HANDLER_FOR(SIGINT, act); /* Ctrl-C typed */
+	SET_HANDLER_FOR(SIGQUIT, act); /* keyboard quit, Ctrl-\ (core dump) */
+	SET_HANDLER_FOR(SIGFPE, act); /* floating-point error, or any math error */
+	SET_HANDLER_FOR(SIGTSTP, act); /* terminal stop */
+}
 
 static void _noop(void) {}
 
@@ -61,9 +97,25 @@ unsigned int CUTE_getCaseTestsNumber(CUTE_TestCase *const c) {
 CUTE_TestCaseOutcome *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 	CUTE_TestCaseOutcome *r = CUTE_prepareOutcome(tc->size);
 	tc->initiate();
+	_set_handlers();
 	for(unsigned int i = 0; i < tc->size; ++i) {
 		tc->before();
+		_status = STATUS_OK;
 		CUTE_runTest(tc->tests[i]);
+		switch(_status) {
+			case STATUS_OK:
+				debug("success");
+				break;
+			case STATUS_FAILURE:
+				debug("Test failed");
+				break;
+			case STATUS_INTERRUPT:
+				debug("User interruption");
+				break;
+			case STATUS_ERROR:
+				debug("Test error");
+				break;
+		}
 		tc->after();
 		r->results[i].name = CUTE_getTestName(tc->tests[i]);
 		r->results[i].result = CUTE_RESULT_SUCCESS;

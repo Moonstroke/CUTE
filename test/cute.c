@@ -1,7 +1,7 @@
 #include "cute.h"
 
 #include <clog.h>
-#include <stdlib.h> /* for abort */
+#include <signal.h> /* for raise, SIGINT, SIGQUIT, SIGABRT */
 
 
 
@@ -14,7 +14,8 @@ static void test_1__f(void);
 static void test_2__f(void);
 static void test_assert__f(void);
 static void test_abort__f(void);
-static void test_segfault__f(void);
+static void test_interrupt__f(void);
+static void test_quit__f(void);
 
 
 int main(void) {
@@ -23,21 +24,23 @@ int main(void) {
 
 	CUTE_TestSuite *suite;
 	CUTE_TestCase *case_1, *case_2;
-	CUTE_Test test_1, test_2, test_assert, test_exit, test_segfault;
+	CUTE_Test test_1, test_2, test_assert, test_abort, test_interrupt, test_quit;
 
 	test_1 = CUTE_makeTest(test_1__f);
 	test_2 = CUTE_makeTest(test_2__f);
 	test_assert = CUTE_makeTest(test_assert__f);
-	test_exit = CUTE_makeTest(test_abort__f);
-	test_segfault = CUTE_makeTest(test_segfault__f);
+	test_abort = CUTE_makeTest(test_abort__f);
+	test_interrupt = CUTE_makeTest(test_interrupt__f);
+	test_quit = CUTE_makeTest(test_quit__f);
 
-	case_1 = CUTE_newTestCase(2);
+	case_1 = CUTE_newTestCase(3);
 	CUTE_setCaseInitiate(case_1, init);
 	CUTE_setCaseTerminate(case_1, term);
 	CUTE_setCaseBefore(case_1, setUp);
 	CUTE_setCaseAfter(case_1, tearDown);
 	CUTE_addCaseTest(case_1, test_1);
-	CUTE_addCaseTest(case_1, test_exit);
+	CUTE_addCaseTest(case_1, test_abort);
+	CUTE_addCaseTest(case_1, test_quit);
 
 	case_2 = CUTE_newTestCase(3);
 	CUTE_setCaseInitiate(case_2, init);
@@ -46,7 +49,7 @@ int main(void) {
 	CUTE_setCaseAfter(case_2, tearDown);
 	CUTE_addCaseTest(case_2, test_2);
 	CUTE_addCaseTest(case_2, test_assert);
-	CUTE_addCaseTest(case_2, test_segfault);
+	CUTE_addCaseTest(case_2, test_interrupt);
 
 	suite = CUTE_buildTestSuite(2, case_1, case_2);
 
@@ -85,9 +88,13 @@ void test_assert__f(void) {
 }
 void test_abort__f(void) {
 	error("call abort()");
-	abort();
+	raise(SIGABRT);
 }
-void test_segfault__f(void) {
-	error("trigger segmentation fault");
-	*(int*)NULL = 666;
+void test_interrupt__f(void) {
+	error("interrupt (Ctrl-C)");
+	raise(SIGINT);
+}
+void test_quit__f(void) {
+	error("quit (Ctrl-\\)");
+	raise(SIGQUIT);
 }
