@@ -80,7 +80,7 @@ void setUp(void) {
 	verbose("setUp");
 }
 void tearDown(void) {
-	verbose("tearDown\n");
+	verbose("tearDown");
 }
 
 
