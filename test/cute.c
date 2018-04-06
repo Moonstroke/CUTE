@@ -73,7 +73,7 @@ void init(void) {
 	verbose("init");
 }
 void term(void) {
-	verbose("term");
+	verbose("term\n");
 }
 
 void setUp(void) {
