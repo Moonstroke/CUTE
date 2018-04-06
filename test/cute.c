@@ -18,6 +18,7 @@ static void test_abort__f(void);
 static void test_interrupt__f(void);
 static void test_quit__f(void);
 static void test_tstop__f(void);
+static void Itest_ignored__f(void);
 
 
 int main(void) {
@@ -32,7 +33,8 @@ int main(void) {
 	          test_abort,
 	          test_interrupt,
 	          test_quit,
-	          test_tstop;
+	          test_tstop,
+	          test_ignored;
 	CUTE_RunResults **results;
 
 	test_1 = CUTE_makeTest(test_1__f);
@@ -42,6 +44,7 @@ int main(void) {
 	test_interrupt = CUTE_makeTest(test_interrupt__f);
 	test_quit = CUTE_makeTest(test_quit__f);
 	test_tstop = CUTE_makeTest(test_tstop__f);
+	test_ignored = CUTE_makeTest(Itest_ignored__f);
 
 	case_1 = CUTE_newTestCase(4);
 	CUTE_setCaseInitiate(case_1, init);
@@ -53,13 +56,14 @@ int main(void) {
 	CUTE_addCaseTest(case_1, test_quit);
 	CUTE_addCaseTest(case_1, test_tstop);
 
-	case_2 = CUTE_newTestCase(3);
+	case_2 = CUTE_newTestCase(4);
 	CUTE_setCaseInitiate(case_2, init);
 	CUTE_setCaseTerminate(case_2, term);
 	CUTE_setCaseBefore(case_2, setUp);
 	CUTE_setCaseAfter(case_2, tearDown);
 	CUTE_addCaseTest(case_2, test_2);
 	CUTE_addCaseTest(case_2, test_assert);
+	CUTE_addCaseTest(case_2, test_ignored);
 	CUTE_addCaseTest(case_2, test_interrupt);
 
 	suite = CUTE_buildTestSuite(2, case_1, case_2);
@@ -119,4 +123,6 @@ void test_quit__f(void) {
 void test_tstop__f(void) {
 	error("TTY stop (Ctrl-Z)");
 	raise(SIGTSTP);
+}
+void Itest_ignored__f(void) {
 }

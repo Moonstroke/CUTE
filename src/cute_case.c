@@ -44,6 +44,14 @@ static void _set_handlers(void) {
 
 static void _noop(void) {}
 
+static CUTE_INLINE bool _ignore(const CUTE_Test t) {
+	return CUTE_getTestName(t)[0] == 'I';
+}
+
+static CUTE_INLINE const char *_stripignore(const CUTE_Test t) {
+	return CUTE_getTestName(t) + 1;
+}
+
 CUTE_TestCase *CUTE_newTestCase(const unsigned int n) {
 	CUTE_TestCase *const tc = malloc(sizeof(CUTE_TestCase)
 	                                 + n * sizeof(CUTE_Test));
@@ -92,6 +100,12 @@ CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 	tc->initiate();
 	_set_handlers();
 	for(unsigned int i = 0; i < tc->number; ++i) {
+		if(_ignore(tc->tests[i])) {
+			r->results[i].name = _stripignore(tc->tests[i]);
+			r->results[i].result = CUTE_RESULT_IGNORED;
+			debug("Ignored %s", _stripignore(tc->tests[i]));
+			continue;
+		}
 		_status = CUTE_RESULT_SUCCESS;
 		tc->before();
 		CUTE_runTest(tc->tests[i]);
