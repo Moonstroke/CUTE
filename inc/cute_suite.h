@@ -52,4 +52,4 @@ void CUTE_destroyTestSuite(CUTE_TestSuite *suite);
  *
  * \return An array containing the results of the execution of the tests
  */
-CUTE_TestCaseOutcome **CUTE_runTestSuite(const CUTE_TestSuite *suite);
+CUTE_RunResults **CUTE_runTestSuite(const CUTE_TestSuite *suite);

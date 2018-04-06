@@ -24,8 +24,8 @@ typedef struct {
 typedef struct {
 	unsigned int total, successes;
 	CUTE_TestResult results[];
-} CUTE_TestCaseOutcome;
+} CUTE_RunResults;
 
-CUTE_CTOR CUTE_TestCaseOutcome *CUTE_prepareOutcome(unsigned int number);
+CUTE_CTOR CUTE_RunResults *CUTE_prepareResults(unsigned int number);
 
-CUTE_MEMBER void CUTE_cleanUpOutcome(CUTE_TestCaseOutcome *outcome);
+CUTE_MEMBER void CUTE_cleanUpResults(CUTE_RunResults *results);

@@ -114,4 +114,4 @@ CUTE_MEMBER unsigned int CUTE_getCaseTestsNumber(CUTE_TestCase *case_) CUTE_PURE
  *
  * \return A pointer to the results of the tests.
  */
-CUTE_MEMBER CUTE_TestCaseOutcome *CUTE_runTestCase(const CUTE_TestCase *case_);
+CUTE_MEMBER CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *case_);

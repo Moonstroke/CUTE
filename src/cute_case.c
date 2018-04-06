@@ -87,8 +87,8 @@ unsigned int CUTE_getCaseTestsNumber(CUTE_TestCase *const tc) {
 	return tc->number;
 }
 
-CUTE_TestCaseOutcome *CUTE_runTestCase(const CUTE_TestCase *const tc) {
-	CUTE_TestCaseOutcome *r = CUTE_prepareOutcome(tc->number);
+CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *const tc) {
+	CUTE_RunResults *r = CUTE_prepareResults(tc->number);
 	tc->initiate();
 	_set_handlers();
 	for(unsigned int i = 0; i < tc->number; ++i) {

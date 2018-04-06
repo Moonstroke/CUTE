@@ -33,7 +33,7 @@ int main(void) {
 	          test_interrupt,
 	          test_quit,
 	          test_tstop;
-	CUTE_TestCaseOutcome **results;
+	CUTE_RunResults **results;
 
 	test_1 = CUTE_makeTest(test_1__f);
 	test_2 = CUTE_makeTest(test_2__f);
@@ -70,7 +70,7 @@ int main(void) {
 
 
 	for(unsigned int i = 0; i < 2; ++i) {
-		CUTE_cleanUpOutcome(results[i]);
+		CUTE_cleanUpResults(results[i]);
 	}
 	free(results);
 
