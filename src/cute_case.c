@@ -10,7 +10,7 @@
 struct testcase {
 	CUTE_Proc *initiate, *terminate;
 	CUTE_Proc *before, *after;
-	unsigned int capacity, size;
+	unsigned int capacity, number;
 	CUTE_Test tests[];
 };
 
@@ -49,7 +49,7 @@ CUTE_TestCase *CUTE_newTestCase(const unsigned int n) {
 	                                 + n * sizeof(CUTE_Test));
 	if(tc) {
 		tc->initiate = tc->terminate = tc->before = tc->after = _noop;
-		tc->size = 0;
+		tc->number = 0;
 		for(unsigned int i = 0; i < (tc->capacity = n); ++i) {
 			tc->tests[i] = (CUTE_Test){NULL, ""};
 		}
@@ -76,22 +76,22 @@ void CUTE_setCaseAfter(CUTE_TestCase *const tc, CUTE_Proc *const f) {
 }
 
 bool CUTE_addCaseTest(CUTE_TestCase *const tc, CUTE_Test t) {
-	if(tc->size < tc->capacity) {
-		tc->tests[tc->size++] = t;
+	if(tc->number < tc->capacity) {
+		tc->tests[tc->number++] = t;
 		return true;
 	}
 	return false;
 }
 
-unsigned int CUTE_getCaseTestsNumber(CUTE_TestCase *const c) {
-	return c->size;
+unsigned int CUTE_getCaseTestsNumber(CUTE_TestCase *const tc) {
+	return tc->number;
 }
 
 CUTE_TestCaseOutcome *CUTE_runTestCase(const CUTE_TestCase *const tc) {
-	CUTE_TestCaseOutcome *r = CUTE_prepareOutcome(tc->size);
+	CUTE_TestCaseOutcome *r = CUTE_prepareOutcome(tc->number);
 	tc->initiate();
 	_set_handlers();
-	for(unsigned int i = 0; i < tc->size; ++i) {
+	for(unsigned int i = 0; i < tc->number; ++i) {
 		_status = CUTE_RESULT_SUCCESS;
 		tc->before();
 		CUTE_runTest(tc->tests[i]);
@@ -115,7 +115,7 @@ CUTE_TestCaseOutcome *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 				continue;
 			case CUTE_RESULT_CANCELED:
 				debug("User interrupted %s", CUTE_getTestName(tc->tests[i]));
-				for(; i < tc->size; ++i) { /* cancel all remaining tests */
+				for(; i < tc->number; ++i) { /* cancel all remaining tests */
 					r->results[i].name = CUTE_getTestName(tc->tests[i]);
 					r->results[i].result = CUTE_RESULT_CANCELED;
 				}
