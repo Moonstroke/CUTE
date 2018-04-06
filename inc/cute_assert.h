@@ -86,11 +86,12 @@
 
 
 /**
- * \brief Fails immediately.
+ * \brief Fails immediately by raising the \c SIGABRT signal.
  *
- * \param[in] msg A message to print
- *
- * \return The function terminates the program execution, it does not return.
+ * \param[in] msg  A message to print
+ * \param[in] file The file where the call was made from (use \c __FILE__)
+ * \param[in] line The line number in the file (use \c __LINE__)
+ * \param[in] func The function within which the call was made (use \c __func__)
  */
 void CUTE_fail(const char *msg, const char *file, unsigned int line,
                const char *func);
