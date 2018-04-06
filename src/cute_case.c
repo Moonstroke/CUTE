@@ -18,11 +18,11 @@ static volatile sig_atomic_t _status;
 
 static void _handler(const int signum) {
 	static const CUTE_TestStatus statutes[32] = {
-		[SIGABRT] = CUTE_RESULT_FAILURE,
-		[SIGFPE] = CUTE_RESULT_ERROR,
-		[SIGINT] = CUTE_RESULT_CANCELED,
-		[SIGQUIT] = CUTE_RESULT_CANCELED,
-		[SIGTSTP] = CUTE_RESULT_SKIPPED
+		[SIGABRT] = CUTE_STATUS_FAILURE,
+		[SIGFPE] = CUTE_STATUS_ERROR,
+		[SIGINT] = CUTE_STATUS_CANCELED,
+		[SIGQUIT] = CUTE_STATUS_CANCELED,
+		[SIGTSTP] = CUTE_STATUS_SKIPPED
 	};
 	_status = statutes[signum];
 }
@@ -102,36 +102,36 @@ CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 	for(unsigned int i = 0; i < tc->number; ++i) {
 		if(_ignore(tc->tests[i])) {
 			r->results[i].name = _stripignore(tc->tests[i]);
-			r->results[i].result = CUTE_RESULT_IGNORED;
+			r->results[i].result = CUTE_STATUS_IGNORED;
 			debug("Ignored %s", _stripignore(tc->tests[i]));
 			continue;
 		}
-		_status = CUTE_RESULT_SUCCESS;
+		_status = CUTE_STATUS_SUCCESS;
 		tc->before();
 		CUTE_runTest(tc->tests[i]);
 		tc->after();
 		r->results[i].name = CUTE_getTestName(tc->tests[i]);
 		switch(r->results[i].result = _status) {
-			case CUTE_RESULT_SUCCESS:
+			case CUTE_STATUS_SUCCESS:
 				++r->successes;
 				debug("%s: success", CUTE_getTestName(tc->tests[i]));
 				break;
-			case CUTE_RESULT_FAILURE:
+			case CUTE_STATUS_FAILURE:
 				debug("Test %s failed", CUTE_getTestName(tc->tests[i]));
 				break;
-			case CUTE_RESULT_ERROR:
+			case CUTE_STATUS_ERROR:
 				debug("%s test error", CUTE_getTestName(tc->tests[i]));
 				break;
-			case CUTE_RESULT_IGNORED:
+			case CUTE_STATUS_IGNORED:
 				break; /* can't occur, only here for the warning */
-			case CUTE_RESULT_SKIPPED:
+			case CUTE_STATUS_SKIPPED:
 				debug("test %s skipped", CUTE_getTestName(tc->tests[i]));
 				continue;
-			case CUTE_RESULT_CANCELED:
+			case CUTE_STATUS_CANCELED:
 				debug("User interrupted %s", CUTE_getTestName(tc->tests[i]));
 				for(; i < tc->number; ++i) { /* cancel all remaining tests */
 					r->results[i].name = CUTE_getTestName(tc->tests[i]);
-					r->results[i].result = CUTE_RESULT_CANCELED;
+					r->results[i].result = CUTE_STATUS_CANCELED;
 				}
 				goto end;
 		}
