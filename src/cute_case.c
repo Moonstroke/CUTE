@@ -14,22 +14,15 @@ struct testcase {
 	CUTE_Test tests[];
 };
 
-enum status {
-	STATUS_OK = 0, /* test success */
-	STATUS_FAILURE, /* assertion in the test failed */
-	STATUS_ERROR, /* error outside of assertion (zero-division, int overflow) */
-	STATUS_INTERRUPT /* User cancelled */
-};
-
 static volatile sig_atomic_t _status;
 
 static void _handler(const int signum) {
-	static const enum status statutes[32] = {
-		[SIGABRT] = STATUS_FAILURE,
-		[SIGFPE] = STATUS_ERROR,
-		[SIGINT] = STATUS_INTERRUPT,
-		[SIGQUIT] = STATUS_INTERRUPT,
-		[SIGTSTP] = STATUS_INTERRUPT
+	static const CUTE_TestStatus statutes[32] = {
+		[SIGABRT] = CUTE_RESULT_FAILURE,
+		[SIGFPE] = CUTE_RESULT_ERROR,
+		[SIGINT] = CUTE_RESULT_CANCELED,
+		[SIGQUIT] = CUTE_RESULT_CANCELED,
+		[SIGTSTP] = CUTE_RESULT_SKIPPED
 	};
 	_status = statutes[signum];
 }
@@ -100,19 +93,22 @@ CUTE_TestCaseOutcome *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 	_set_handlers();
 	for(unsigned int i = 0; i < tc->size; ++i) {
 		tc->before();
-		_status = STATUS_OK;
+		_status = CUTE_RESULT_SUCCESS;
 		CUTE_runTest(tc->tests[i]);
 		switch(_status) {
-			case STATUS_OK:
+			case CUTE_RESULT_SUCCESS:
 				debug("success");
 				break;
-			case STATUS_FAILURE:
+			case CUTE_RESULT_FAILURE:
 				debug("Test failed");
 				break;
-			case STATUS_INTERRUPT:
+			case CUTE_RESULT_CANCELED:
 				debug("User interruption");
 				break;
-			case STATUS_ERROR:
+			case CUTE_RESULT_SKIPPED:
+				debug("test skipped");
+				break;
+			case CUTE_RESULT_ERROR:
 				debug("Test error");
 				break;
 		}
