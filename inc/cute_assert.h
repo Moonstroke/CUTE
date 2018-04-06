@@ -96,4 +96,26 @@ void CUTE_fail(const char *msg, const char *file, unsigned int line,
                const char *func);
 
 
+/**
+ * \brief Ends the function immediately if a condition is not met.
+ *
+ * \note Unlike \a CUTE_runTimeAssert, this macro does not result in an error;
+ *       it only returns from the function quietly.
+ *
+ * \param[in] cond The condition to check
+ */
+#define CUTE_assume(cond) if(cond); else return;
+
+
+/**
+ * \brief Returns immediately the given value if a condition is not met.
+ *
+ * \note Use this to \e assume a condition from a non-\c void function.
+ *
+ * \param[in] cond  The condition to check
+ * \param[in] value The value to return
+ */
+#define CUTE_assumeValue(cond, value) if(cond); else return value;
+
+
 #endif /* CUTE_ASSERT_H */
