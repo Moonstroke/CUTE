@@ -2,6 +2,7 @@
 
 #include <clog.h>
 #include <signal.h> /* for raise, SIGINT, SIGQUIT, SIGABRT, SIGTSTP */
+#include <stdlib.h> /* for free */
 
 
 
