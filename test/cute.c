@@ -1,7 +1,7 @@
 #include "cute.h"
 
 #include <clog.h>
-#include <signal.h> /* for raise, SIGINT, SIGQUIT, SIGABRT */
+#include <signal.h> /* for raise, SIGINT, SIGQUIT, SIGABRT, SIGTSTP */
 
 
 
@@ -16,6 +16,7 @@ static void test_assert__f(void);
 static void test_abort__f(void);
 static void test_interrupt__f(void);
 static void test_quit__f(void);
+static void test_tstop__f(void);
 
 
 int main(void) {
@@ -24,7 +25,13 @@ int main(void) {
 
 	CUTE_TestSuite *suite;
 	CUTE_TestCase *case_1, *case_2;
-	CUTE_Test test_1, test_2, test_assert, test_abort, test_interrupt, test_quit;
+	CUTE_Test test_1,
+	          test_2,
+	          test_assert,
+	          test_abort,
+	          test_interrupt,
+	          test_quit,
+	          test_tstop;
 
 	test_1 = CUTE_makeTest(test_1__f);
 	test_2 = CUTE_makeTest(test_2__f);
@@ -32,8 +39,9 @@ int main(void) {
 	test_abort = CUTE_makeTest(test_abort__f);
 	test_interrupt = CUTE_makeTest(test_interrupt__f);
 	test_quit = CUTE_makeTest(test_quit__f);
+	test_tstop = CUTE_makeTest(test_tstop__f);
 
-	case_1 = CUTE_newTestCase(3);
+	case_1 = CUTE_newTestCase(4);
 	CUTE_setCaseInitiate(case_1, init);
 	CUTE_setCaseTerminate(case_1, term);
 	CUTE_setCaseBefore(case_1, setUp);
@@ -41,6 +49,7 @@ int main(void) {
 	CUTE_addCaseTest(case_1, test_1);
 	CUTE_addCaseTest(case_1, test_abort);
 	CUTE_addCaseTest(case_1, test_quit);
+	CUTE_addCaseTest(case_1, test_tstop);
 
 	case_2 = CUTE_newTestCase(3);
 	CUTE_setCaseInitiate(case_2, init);
@@ -97,4 +106,8 @@ void test_interrupt__f(void) {
 void test_quit__f(void) {
 	error("quit (Ctrl-\\)");
 	raise(SIGQUIT);
+}
+void test_tstop__f(void) {
+	error("TTY stop (Ctrl-Z)");
+	raise(SIGTSTP);
 }
