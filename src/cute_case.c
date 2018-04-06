@@ -92,30 +92,35 @@ CUTE_TestCaseOutcome *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 	tc->initiate();
 	_set_handlers();
 	for(unsigned int i = 0; i < tc->size; ++i) {
-		tc->before();
 		_status = CUTE_RESULT_SUCCESS;
+		tc->before();
 		CUTE_runTest(tc->tests[i]);
-		switch(_status) {
+		tc->after();
+		r->results[i].name = CUTE_getTestName(tc->tests[i]);
+		switch(r->results[i].result = _status) {
 			case CUTE_RESULT_SUCCESS:
+				++r->successes;
 				debug("success");
 				break;
 			case CUTE_RESULT_FAILURE:
 				debug("Test failed");
 				break;
-			case CUTE_RESULT_CANCELED:
-				debug("User interruption");
-				break;
-			case CUTE_RESULT_SKIPPED:
-				debug("test skipped");
-				break;
 			case CUTE_RESULT_ERROR:
 				debug("Test error");
 				break;
+			case CUTE_RESULT_IGNORED:
+				break; /* can't occur, only here for the warning */
+			case CUTE_RESULT_SKIPPED:
+				debug("test skipped");
+				continue;
+			case CUTE_RESULT_CANCELED:
+				debug("User interruption");
+				for(; i < tc->size; ++i) { /* cancel all remaining tests */
+					r->results[i].name = CUTE_getTestName(tc->tests[i]);
+					r->results[i].result = CUTE_RESULT_CANCELED;
+				}
+				return r;
 		}
-		tc->after();
-		r->results[i].name = CUTE_getTestName(tc->tests[i]);
-		r->results[i].result = CUTE_RESULT_SUCCESS;
-		++r->successes;
 	}
 	tc->terminate();
 	return r;
