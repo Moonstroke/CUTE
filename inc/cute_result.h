@@ -17,7 +17,7 @@ typedef enum {
 typedef struct {
 	const char *name;
 	CUTE_TestStatus result;
-	char padding[4];
+	int extra;
 } CUTE_TestResult;
 
 
