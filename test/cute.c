@@ -32,6 +32,7 @@ int main(void) {
 	          test_interrupt,
 	          test_quit,
 	          test_tstop;
+	CUTE_TestCaseOutcome **results;
 
 	test_1 = CUTE_makeTest(test_1__f);
 	test_2 = CUTE_makeTest(test_2__f);
@@ -62,8 +63,15 @@ int main(void) {
 
 	suite = CUTE_buildTestSuite(2, case_1, case_2);
 
-	CUTE_runTestSuite(suite);
+	results = CUTE_runTestSuite(suite);
 
+	/* TODO use results */
+
+
+	for(unsigned int i = 0; i < 2; ++i) {
+		CUTE_cleanUpOutcome(results[i]);
+	}
+	free(results);
 
 	CUTE_destroyTestSuite(suite);
 	return 0;
