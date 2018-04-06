@@ -21,15 +21,22 @@
 
 
 /**
+ * \def CUTE_runTimeAssert
+ *
  * \brief Aborts if the condition evaluates to \c 0.
  *
  * \note This merely is a redefinition of the standard macro \a assert.
  *
  * \param[in] cond The expression to evaluate
  */
-#define CUTE_runTimeAssert(cond)\
+#if defined(NDEBUG)
+# define CUTE_runTimeAssert(cond) (void)(cond)
+#else
+# define CUTE_runTimeAssert(cond)\
 	if(cond); else CUTE_fail("Assertion " #cond " failed", __FILE__, __LINE__,\
 	                         __func__)
+#endif
+
 
 /**
  * \def CUTE_compileTimeAssert
