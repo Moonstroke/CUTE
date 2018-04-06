@@ -51,16 +51,16 @@ CUTE_MEMBER void CUTE_freeTestCase(CUTE_TestCase *case_);
  * \param[in,out] case_    The test case
  * \param[in]     initiate The procedure
  */
-CUTE_MEMBER CUTE_NOTNULL(2) void CUTE_setCaseInitiate(CUTE_TestCase *case_,
-                                                      CUTE_Proc *initiate);
+CUTE_MEMBER void CUTE_setCaseInitiate(CUTE_TestCase *case_, CUTE_Proc *initiate)
+CUTE_NOTNULL(2);
 /**
  * \brief Specifies the procedure to call after having run all the tests.
  *
  * \param[in,out] case_     The test case
  * \param[in]     terminate The procedure
  */
-CUTE_MEMBER CUTE_NOTNULL(2) void CUTE_setCaseTerminate(CUTE_TestCase *case_,
-                                                       CUTE_Proc *terminate);
+CUTE_MEMBER void CUTE_setCaseTerminate(CUTE_TestCase *case_,
+                                       CUTE_Proc *terminate) CUTE_NOTNULL(2);
 
 /**
  * \brief Specifies the procedure to call before every test.
@@ -68,16 +68,17 @@ CUTE_MEMBER CUTE_NOTNULL(2) void CUTE_setCaseTerminate(CUTE_TestCase *case_,
  * \param[in,out] case_ The test case
  * \param[in]     setUp The procedure
  */
-CUTE_MEMBER CUTE_NOTNULL(2) void CUTE_setCaseBefore(CUTE_TestCase *case_,
-                                                    CUTE_Proc *setUp);
+CUTE_MEMBER void CUTE_setCaseBefore(CUTE_TestCase *case_, CUTE_Proc *setUp)
+CUTE_NOTNULL(2);
+
 /**
  * \brief Specifies the procedure to call after each test.
  *
  * \param[in,out] case_    The test case
  * \param[in]     tearDown The procedure
  */
-CUTE_MEMBER CUTE_NOTNULL(2) void CUTE_setCaseAfter(CUTE_TestCase *case_,
-                                                   CUTE_Proc *tearDown);
+CUTE_MEMBER void CUTE_setCaseAfter(CUTE_TestCase *case_, CUTE_Proc *tearDown)
+CUTE_NOTNULL(2);
 
 /**
  * \brief Adds a unit test to the list of tests in the case.
