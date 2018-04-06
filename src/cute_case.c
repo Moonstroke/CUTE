@@ -119,9 +119,10 @@ CUTE_TestCaseOutcome *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 					r->results[i].name = CUTE_getTestName(tc->tests[i]);
 					r->results[i].result = CUTE_RESULT_CANCELED;
 				}
-				return r;
+				goto end;
 		}
 	}
+end:
 	tc->terminate();
 	return r;
 }
