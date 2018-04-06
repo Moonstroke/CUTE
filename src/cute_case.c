@@ -102,7 +102,7 @@ CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 	for(unsigned int i = 0; i < tc->number; ++i) {
 		if(_ignore(tc->tests[i])) {
 			r->results[i].name = _stripignore(tc->tests[i]);
-			r->results[i].result = CUTE_STATUS_IGNORED;
+			r->results[i].status = CUTE_STATUS_IGNORED;
 			debug("Ignored %s", _stripignore(tc->tests[i]));
 			continue;
 		}
@@ -111,7 +111,7 @@ CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 		CUTE_runTest(tc->tests[i]);
 		tc->after();
 		r->results[i].name = CUTE_getTestName(tc->tests[i]);
-		switch(r->results[i].result = _status) {
+		switch(r->results[i].status = _status) {
 			case CUTE_STATUS_SUCCESS:
 				++r->successes;
 				debug("%s: success", CUTE_getTestName(tc->tests[i]));
@@ -131,7 +131,7 @@ CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 				debug("User interrupted %s", CUTE_getTestName(tc->tests[i]));
 				for(; i < tc->number; ++i) { /* cancel all remaining tests */
 					r->results[i].name = CUTE_getTestName(tc->tests[i]);
-					r->results[i].result = CUTE_STATUS_CANCELED;
+					r->results[i].status = CUTE_STATUS_CANCELED;
 				}
 				goto end;
 		}

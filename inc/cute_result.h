@@ -51,7 +51,7 @@ typedef struct {
 	/**
 	 * \brief The status of the test.
 	 */
-	CUTE_TestStatus result;
+	CUTE_TestStatus status;
 
 	/**
 	 * \brief Extra information about the test status.
