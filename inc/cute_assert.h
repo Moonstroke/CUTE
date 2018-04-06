@@ -88,6 +88,8 @@
 /**
  * \brief Fails immediately by raising the \c SIGABRT signal.
  *
+ * \note If \a msg is \c NULL no output is written on \e stderr.
+ *
  * \param[in] msg  A message to print
  * \param[in] file The file where the call was made from (use \c __FILE__)
  * \param[in] line The line number in the file (use \c __LINE__)
