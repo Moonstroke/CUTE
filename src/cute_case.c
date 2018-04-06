@@ -100,21 +100,21 @@ CUTE_TestCaseOutcome *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 		switch(r->results[i].result = _status) {
 			case CUTE_RESULT_SUCCESS:
 				++r->successes;
-				debug("success");
+				debug("%s: success", CUTE_getTestName(tc->tests[i]));
 				break;
 			case CUTE_RESULT_FAILURE:
-				debug("Test failed");
+				debug("Test %s failed", CUTE_getTestName(tc->tests[i]));
 				break;
 			case CUTE_RESULT_ERROR:
-				debug("Test error");
+				debug("%s test error", CUTE_getTestName(tc->tests[i]));
 				break;
 			case CUTE_RESULT_IGNORED:
 				break; /* can't occur, only here for the warning */
 			case CUTE_RESULT_SKIPPED:
-				debug("test skipped");
+				debug("test %s skipped", CUTE_getTestName(tc->tests[i]));
 				continue;
 			case CUTE_RESULT_CANCELED:
-				debug("User interruption");
+				debug("User interrupted %s", CUTE_getTestName(tc->tests[i]));
 				for(; i < tc->size; ++i) { /* cancel all remaining tests */
 					r->results[i].name = CUTE_getTestName(tc->tests[i]);
 					r->results[i].result = CUTE_RESULT_CANCELED;
