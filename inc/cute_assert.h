@@ -6,7 +6,7 @@
  * \brief Assertions macros.
  *
  * This file defines macros to ensure that a condition is \c true.
- * If the condition is \c false, the program execution ends with an \a abort
+ * If the condition is \c false, the program execution ends with an \a abort(3)
  * call.
  * If the macro \c NDEBUG is defined, assertions are not executed.
  */
@@ -25,7 +25,7 @@
  *
  * \brief Aborts if the condition evaluates to \c 0.
  *
- * \note This merely is a redefinition of the standard macro \a assert.
+ * \note This merely is a redefinition of the standard macro \a assert(3).
  *
  * \param[in] cond The expression to evaluate
  */
