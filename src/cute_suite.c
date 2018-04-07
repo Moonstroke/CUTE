@@ -3,6 +3,8 @@
 #include <stdarg.h> /* for va_* */
 #include <stdlib.h> /* for malloc, free */
 
+#include "cute_assert.h" /* for CUTE_assumeValue */
+
 
 
 struct testsuite {
@@ -34,9 +36,9 @@ void CUTE_destroyTestSuite(CUTE_TestSuite *const ts) {
 
 CUTE_RunResults **CUTE_runTestSuite(const CUTE_TestSuite *const ts) {
 	CUTE_RunResults **results = malloc(ts->size * sizeof(CUTE_RunResults*));
+	CUTE_assumeValue(results != NULL, NULL);
 	for(unsigned int i = 0; i < ts->size; ++i) {
 		results[i] = CUTE_runTestCase(ts->cases[i]);
-		// TODO print results from here?
 	}
 	return results;
 }
