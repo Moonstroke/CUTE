@@ -45,6 +45,7 @@ CUTE_CTOR CUTE_TestCase *CUTE_newTestCase(unsigned int number);
  */
 CUTE_MEMBER void CUTE_freeTestCase(CUTE_TestCase *case_);
 
+
 /**
  * \brief Specifies the procedure to call before running the tests.
  *
@@ -53,6 +54,7 @@ CUTE_MEMBER void CUTE_freeTestCase(CUTE_TestCase *case_);
  */
 CUTE_MEMBER void CUTE_setCaseInitiate(CUTE_TestCase *case_, CUTE_Proc *initiate)
 CUTE_NOTNULL(2);
+
 /**
  * \brief Specifies the procedure to call after having run all the tests.
  *
@@ -79,6 +81,7 @@ CUTE_NOTNULL(2);
  */
 CUTE_MEMBER void CUTE_setCaseAfter(CUTE_TestCase *case_, CUTE_Proc *tearDown)
 CUTE_NOTNULL(2);
+
 
 /**
  * \brief Adds a unit test to the list of tests in the case.
