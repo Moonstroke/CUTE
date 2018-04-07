@@ -56,7 +56,7 @@ AR_LIB := lib$(PROJECT_NAME).a
 
 
 # Preprocessor flags
-CPPFLAGS := -I$(INC_DIR) -D_POSIX_C_SOURCE
+CPPFLAGS := -I$(INC_DIR) -D_POSIX_C_SOURCE=200809L
 # Compilation flags
 CFLAGS := -std=c11 -pedantic -Wall -Wextra -Wpadded -O$(OPTIM_LVL)
 ifeq ($(DEBUG), y)
