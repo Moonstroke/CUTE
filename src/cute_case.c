@@ -93,11 +93,11 @@ bool CUTE_addCaseTest(CUTE_TestCase *const tc, CUTE_Test t) {
 	return false;
 }
 
-unsigned int CUTE_getCaseTestsNumber(CUTE_TestCase *const tc) {
+unsigned int CUTE_getCaseTestsNumber(const CUTE_TestCase *const tc) {
 	return tc->number;
 }
 
-const char *CUTE_getCaseTitle(CUTE_TestCase *const tc) {
+const char *CUTE_getCaseTitle(const CUTE_TestCase *const tc) {
 	return tc->title;
 }
 
