@@ -5,6 +5,8 @@
 #include <stdarg.h> /* for va_* */
 #include <stdlib.h> /* for malloc, free, NULL */
 
+#include "cute_assert.h" /* for CUTE_assumeValue */
+
 
 
 static volatile sig_atomic_t _status;
@@ -48,13 +50,12 @@ static CUTE_INLINE const char *_stripignore(const CUTE_Test t) {
 CUTE_TestCase *CUTE_newTestCase(const char *const t, const unsigned int n) {
 	CUTE_TestCase *const tc = malloc(sizeof(CUTE_TestCase)
 	                                 + n * sizeof(CUTE_Test));
-	if(tc) {
-		tc->title = t;
-		tc->initiate = tc->terminate = tc->before = tc->after = _noop;
-		tc->number = 0;
-		for(unsigned int i = 0; i < (tc->capacity = n); ++i) {
-			tc->tests[i] = (CUTE_Test){NULL, ""};
-		}
+	CUTE_assumeValue(tc != NULL, NULL);
+	tc->title = t;
+	tc->initiate = tc->terminate = tc->before = tc->after = _noop;
+	tc->number = 0;
+	for(unsigned int i = 0; i < (tc->capacity = n); ++i) {
+		tc->tests[i] = (CUTE_Test){NULL, ""};
 	}
 	return tc;
 }
