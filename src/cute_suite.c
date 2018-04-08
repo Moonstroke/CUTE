@@ -35,10 +35,10 @@ void CUTE_destroyTestSuite(CUTE_TestSuite *const ts) {
 }
 
 CUTE_RunResults **CUTE_runTestSuite(const CUTE_TestSuite *const ts) {
-	CUTE_RunResults **results = malloc(ts->number * sizeof(CUTE_RunResults*));
-	CUTE_assumeValue(results != NULL, NULL);
+	CUTE_RunResults **r = malloc(ts->number * sizeof(CUTE_RunResults*));
+	CUTE_assumeValue(r != NULL, NULL);
 	for(unsigned int i = 0; i < ts->number; ++i) {
-		results[i] = CUTE_runTestCase(ts->cases[i]);
+		r[i] = CUTE_runTestCase(ts->cases[i]);
 	}
-	return results;
+	return r;
 }
