@@ -46,7 +46,7 @@ int main(void) {
 	test_tstop = CUTE_makeTest(test_tstop__f);
 	test_ignored = CUTE_makeTest(Itest_ignored__f);
 
-	case_1 = CUTE_newTestCase(4);
+	case_1 = CUTE_newTestCase("case 1", 4);
 	CUTE_setCaseInitiate(case_1, init);
 	CUTE_setCaseTerminate(case_1, term);
 	CUTE_setCaseBefore(case_1, setUp);
@@ -56,7 +56,7 @@ int main(void) {
 	CUTE_addCaseTest(case_1, test_quit);
 	CUTE_addCaseTest(case_1, test_tstop);
 
-	case_2 = CUTE_newTestCase(4);
+	case_2 = CUTE_newTestCase("case 2", 4);
 	CUTE_setCaseInitiate(case_2, init);
 	CUTE_setCaseTerminate(case_2, term);
 	CUTE_setCaseBefore(case_2, setUp);

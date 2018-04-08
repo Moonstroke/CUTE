@@ -8,6 +8,7 @@
 
 
 struct testcase {
+	const char *title;
 	CUTE_Proc *initiate, *terminate;
 	CUTE_Proc *before, *after;
 	unsigned int capacity, number;
@@ -52,10 +53,11 @@ static CUTE_INLINE const char *_stripignore(const CUTE_Test t) {
 	return CUTE_getTestName(t) + 1;
 }
 
-CUTE_TestCase *CUTE_newTestCase(const unsigned int n) {
+CUTE_TestCase *CUTE_newTestCase(const char *const t, const unsigned int n) {
 	CUTE_TestCase *const tc = malloc(sizeof(CUTE_TestCase)
 	                                 + n * sizeof(CUTE_Test));
 	if(tc) {
+		tc->title = t;
 		tc->initiate = tc->terminate = tc->before = tc->after = _noop;
 		tc->number = 0;
 		for(unsigned int i = 0; i < (tc->capacity = n); ++i) {
@@ -95,8 +97,12 @@ unsigned int CUTE_getCaseTestsNumber(CUTE_TestCase *const tc) {
 	return tc->number;
 }
 
+const char *CUTE_getCaseTitle(CUTE_TestCase *const tc) {
+	return tc->title;
+}
+
 CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *const tc) {
-	CUTE_RunResults *r = CUTE_prepareResults(tc->number);
+	CUTE_RunResults *r = CUTE_prepareResults(tc->title, tc->number);
 	tc->initiate();
 	_set_handlers();
 	for(unsigned int i = 0; i < tc->number; ++i) {

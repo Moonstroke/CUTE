@@ -4,10 +4,12 @@
 
 
 
-CUTE_RunResults *CUTE_prepareResults(const unsigned int n) {
+CUTE_RunResults *CUTE_prepareResults(const char *const t,
+                                     const unsigned int n) {
 	CUTE_RunResults *const r = malloc(sizeof(CUTE_RunResults)
 	                                       + n * sizeof(CUTE_TestResult));
 	if(r) {
+		r->title = t;
 		r->total = n;
 		r->successes = 0;
 	}

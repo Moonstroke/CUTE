@@ -7,6 +7,7 @@
  *
  * A test case is a structure designed to contain several tests semantically
  * related, like different tests on the same function, or the same type.
+ * A test case has a title that illustrates the feature being tested.
  *
  * \note This file can not be included directly, it is automatically provided
  *       when \c cute_test.h is included.
@@ -32,11 +33,13 @@ typedef struct testcase CUTE_TestCase;
  * \note At the moment of execution, the case is expected to contain exactly
  * \a number elements.
  *
+ * \param[in] title The title of the test case
  * \param[in] number The number of unit tests
  *
  * \return A new test case ready to hold \a number tests.
  */
-CUTE_CTOR CUTE_TestCase *CUTE_newTestCase(unsigned int number);
+CUTE_CTOR CUTE_TestCase *CUTE_newTestCase(const char *title,
+                                          unsigned int number) CUTE_NOTNULL(1);
 
 /**
  * \brief Release the memory from a test case.
@@ -97,6 +100,15 @@ CUTE_NOTNULL(2);
  */
 CUTE_MEMBER bool CUTE_addCaseTest(CUTE_TestCase *case_, CUTE_Test test);
 
+
+/**
+ * \brief Retrieves the title of the test case.
+ *
+ * \param[in] case_ The test case
+ *
+ * \return The title of the test case.
+ */
+CUTE_MEMBER const char *CUTE_getCaseTitle(CUTE_TestCase *case_) CUTE_PURE;
 
 /**
  * \brief Retrieves the number of tests in the case.

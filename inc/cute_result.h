@@ -65,6 +65,10 @@ typedef struct {
  */
 typedef struct {
 	/**
+	 * \brief The title of the test case.
+	 */
+	const char *title;
+	/**
 	 * \brief The total number of tests run.
 	 */
 	unsigned int total;
@@ -83,11 +87,14 @@ typedef struct {
 /**
  * \brief Allocates a large enough instance of \a CUTE_RunResults.
  *
+ * \param[in] title The title of the test case to run
  * \param[in] number The number of tests to prepare the instance for.
  *
  * \return An instance of \a CUTE_RunResults for \a number tests.
  */
-CUTE_CTOR CUTE_RunResults *CUTE_prepareResults(unsigned int number);
+CUTE_CTOR CUTE_RunResults *CUTE_prepareResults(const char *title,
+                                               unsigned int number)
+CUTE_NOTNULL(1);
 
 /**
  * \brief Deallocates the result of a test case.
