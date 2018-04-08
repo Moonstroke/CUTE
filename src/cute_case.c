@@ -7,14 +7,6 @@
 
 
 
-struct testcase {
-	const char *title;
-	CUTE_Proc *initiate, *terminate;
-	CUTE_Proc *before, *after;
-	unsigned int capacity, number;
-	CUTE_Test tests[];
-};
-
 static volatile sig_atomic_t _status;
 
 static void _handler(const int signum) {
@@ -71,19 +63,10 @@ void CUTE_freeTestCase(CUTE_TestCase *const tc) {
 	free(tc);
 }
 
-void CUTE_setCaseInitiate(CUTE_TestCase *const tc, CUTE_Proc *const f) {
-	tc->initiate = f;
-}
-void CUTE_setCaseTerminate(CUTE_TestCase *const tc, CUTE_Proc *const f) {
-	tc->terminate = f;
-}
-
-void CUTE_setCaseBefore(CUTE_TestCase *const tc, CUTE_Proc *const f) {
-	tc->before = f;
-}
-void CUTE_setCaseAfter(CUTE_TestCase *const tc, CUTE_Proc *const f) {
-	tc->after = f;
-}
+extern void CUTE_setCaseInitiate(CUTE_TestCase*, CUTE_Proc*);
+extern void CUTE_setCaseTerminate(CUTE_TestCase*, CUTE_Proc*);
+extern void CUTE_setCaseBefore(CUTE_TestCase*, CUTE_Proc*);
+extern void CUTE_setCaseAfter(CUTE_TestCase *const tc, CUTE_Proc *const f);
 
 bool CUTE_addCaseTest(CUTE_TestCase *const tc, CUTE_Test t) {
 	if(tc->number < tc->capacity) {
@@ -93,13 +76,8 @@ bool CUTE_addCaseTest(CUTE_TestCase *const tc, CUTE_Test t) {
 	return false;
 }
 
-unsigned int CUTE_getCaseTestsNumber(const CUTE_TestCase *const tc) {
-	return tc->number;
-}
-
-const char *CUTE_getCaseTitle(const CUTE_TestCase *const tc) {
-	return tc->title;
-}
+extern unsigned int CUTE_getCaseTestsNumber(const CUTE_TestCase*);
+extern const char *CUTE_getCaseTitle(const CUTE_TestCase*);
 
 CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 	CUTE_RunResults *r = CUTE_prepareResults(tc->title, tc->number);

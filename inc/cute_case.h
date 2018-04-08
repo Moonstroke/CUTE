@@ -22,9 +22,49 @@
 
 
 /**
- * \brief Opaque definition for the test case.
+ * \brief A set of coherent tests.
  */
-typedef struct testcase CUTE_TestCase;
+typedef struct {
+	/**
+	 * \brief The title of the case.
+	 */
+	const char *title;
+
+	/**
+	 * \brief The procedure to call before all tests.
+	 */
+	CUTE_Proc *initiate;
+
+	/**
+	 * \brief The procedure to call after all tests.
+	 */
+	CUTE_Proc *terminate;
+
+	/**
+	 * \brief The procedure to call before each test.
+	 */
+	CUTE_Proc *before;
+
+	/**
+	 * \brief The procedure to call after each test.
+	 */
+	CUTE_Proc *after;
+
+	/**
+	 * \brief The maximum number of tests to contain.
+	 */
+	unsigned int capacity;
+
+	/**
+	 * \brief The number of tests actually in the case.
+	 */
+	unsigned int number;
+
+	/**
+	 * \brief The tests.
+	 */
+	CUTE_Test tests[];
+} CUTE_TestCase;
 
 
 /**
@@ -55,8 +95,11 @@ CUTE_MEMBER void CUTE_freeTestCase(CUTE_TestCase *case_);
  * \param[in,out] case_    The test case
  * \param[in]     initiate The procedure
  */
-CUTE_MEMBER void CUTE_setCaseInitiate(CUTE_TestCase *case_, CUTE_Proc *initiate)
-CUTE_NOTNULL(2);
+CUTE_MEMBER CUTE_INLINE CUTE_NOTNULL(2)
+void CUTE_setCaseInitiate(CUTE_TestCase *const case_,
+                          CUTE_Proc *const initiate) {
+	case_->initiate = initiate;
+}
 
 /**
  * \brief Specifies the procedure to call after having run all the tests.
@@ -64,8 +107,11 @@ CUTE_NOTNULL(2);
  * \param[in,out] case_     The test case
  * \param[in]     terminate The procedure
  */
-CUTE_MEMBER void CUTE_setCaseTerminate(CUTE_TestCase *case_,
-                                       CUTE_Proc *terminate) CUTE_NOTNULL(2);
+CUTE_MEMBER CUTE_INLINE CUTE_NOTNULL(2)
+void CUTE_setCaseTerminate(CUTE_TestCase *const case_,
+                           CUTE_Proc *const terminate) {
+	case_->terminate = terminate;
+}
 
 /**
  * \brief Specifies the procedure to call before every test.
@@ -73,8 +119,10 @@ CUTE_MEMBER void CUTE_setCaseTerminate(CUTE_TestCase *case_,
  * \param[in,out] case_ The test case
  * \param[in]     setUp The procedure
  */
-CUTE_MEMBER void CUTE_setCaseBefore(CUTE_TestCase *case_, CUTE_Proc *setUp)
-CUTE_NOTNULL(2);
+CUTE_MEMBER CUTE_INLINE CUTE_NOTNULL(2)
+void CUTE_setCaseBefore(CUTE_TestCase *const case_, CUTE_Proc *const setUp) {
+	case_->before = setUp;
+}
 
 /**
  * \brief Specifies the procedure to call after each test.
@@ -82,8 +130,10 @@ CUTE_NOTNULL(2);
  * \param[in,out] case_    The test case
  * \param[in]     tearDown The procedure
  */
-CUTE_MEMBER void CUTE_setCaseAfter(CUTE_TestCase *case_, CUTE_Proc *tearDown)
-CUTE_NOTNULL(2);
+CUTE_MEMBER CUTE_INLINE CUTE_NOTNULL(2)
+void CUTE_setCaseAfter(CUTE_TestCase *const case_, CUTE_Proc *const tearDown) {
+	case_->after = tearDown;
+}
 
 
 /**
@@ -108,7 +158,10 @@ CUTE_MEMBER bool CUTE_addCaseTest(CUTE_TestCase *case_, CUTE_Test test);
  *
  * \return The title of the test case.
  */
-CUTE_MEMBER const char *CUTE_getCaseTitle(const CUTE_TestCase *case_) CUTE_PURE;
+CUTE_MEMBER CUTE_INLINE CUTE_PURE
+const char *CUTE_getCaseTitle(const CUTE_TestCase *case_) {
+	return case_->title;
+}
 
 /**
  * \brief Retrieves the number of tests in the case.
@@ -117,8 +170,10 @@ CUTE_MEMBER const char *CUTE_getCaseTitle(const CUTE_TestCase *case_) CUTE_PURE;
  *
  * \return The number of unit tests in the case.
  */
-CUTE_MEMBER unsigned int CUTE_getCaseTestsNumber(const CUTE_TestCase *case_)
-CUTE_PURE;
+CUTE_MEMBER CUTE_INLINE CUTE_PURE
+unsigned int CUTE_getCaseTestsNumber(const CUTE_TestCase *case_) {
+	return case_->number;
+}
 
 
 /**
