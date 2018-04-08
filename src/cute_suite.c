@@ -8,7 +8,7 @@
 
 
 struct testsuite {
-	unsigned int size;
+	unsigned int number;
 	char _padding[4];
 	CUTE_TestCase *cases[];
 };
@@ -19,7 +19,7 @@ CUTE_TestSuite *CUTE_buildTestSuite(const unsigned int n, ...) {
 	if(ts) {
 		va_list args;
 		va_start(args, n);
-		for(unsigned int i = 0; i < (ts->size = n); ++i) {
+		for(unsigned int i = 0; i < (ts->number = n); ++i) {
 			ts->cases[i] = va_arg(args, CUTE_TestCase*);
 		}
 		va_end(args);
@@ -28,16 +28,16 @@ CUTE_TestSuite *CUTE_buildTestSuite(const unsigned int n, ...) {
 }
 
 void CUTE_destroyTestSuite(CUTE_TestSuite *const ts) {
-	for(unsigned int i = 0; i < ts->size; ++i) {
+	for(unsigned int i = 0; i < ts->number; ++i) {
 		CUTE_freeTestCase(ts->cases[i]);
 	}
 	free(ts);
 }
 
 CUTE_RunResults **CUTE_runTestSuite(const CUTE_TestSuite *const ts) {
-	CUTE_RunResults **results = malloc(ts->size * sizeof(CUTE_RunResults*));
+	CUTE_RunResults **results = malloc(ts->number * sizeof(CUTE_RunResults*));
 	CUTE_assumeValue(results != NULL, NULL);
-	for(unsigned int i = 0; i < ts->size; ++i) {
+	for(unsigned int i = 0; i < ts->number; ++i) {
 		results[i] = CUTE_runTestCase(ts->cases[i]);
 	}
 	return results;
