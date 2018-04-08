@@ -88,7 +88,7 @@ typedef struct {
  * \brief Allocates a large enough instance of \a CUTE_RunResults.
  *
  * \param[in] title The title of the test case to run
- * \param[in] number The number of tests to prepare the instance for.
+ * \param[in] number The number of tests to prepare the instance for
  *
  * \return An instance of \a CUTE_RunResults for \a number tests.
  */
