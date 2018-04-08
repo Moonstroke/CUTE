@@ -1,6 +1,6 @@
 #include "cute_test.h"
 
-#include <stdlib.h>
+#include <stdlib.h> /* for malloc, free, NULL */
 
 #include "cute_assert.h" /* for CUTE_assumeValue */
 
