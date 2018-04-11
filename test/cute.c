@@ -25,7 +25,6 @@ int main(void) {
 
 	clog_init(CLOG_FORMAT_TEXT, CLOG_ATTR_COLORED);
 
-	CUTE_TestSuite *suite;
 	CUTE_TestCase *case_1, *case_2;
 	CUTE_Test test_1,
 	          test_2,
@@ -66,19 +65,14 @@ int main(void) {
 	CUTE_addCaseTest(case_2, test_ignored);
 	CUTE_addCaseTest(case_2, test_interrupt);
 
-	suite = CUTE_buildTestSuite(2, case_1, case_2);
+	CUTE_prepareTestSuite(2, case_1, case_2);
 
-	results = CUTE_runTestSuite(suite);
+	results = CUTE_runTestSuite();
 
 	/* TODO use results */
 
 
-	for(unsigned int i = 0; i < 2; ++i) {
-		CUTE_cleanUpResults(results[i]);
-	}
-	free(results);
-
-	CUTE_destroyTestSuite(suite);
+	CUTE_cleanUpTestSuite();
 	return 0;
 }
 

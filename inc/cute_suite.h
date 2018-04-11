@@ -3,10 +3,11 @@
  * \author joH1
  * \version 0.1
  *
- * \brief Defines a structure to run several test cases.
+ * \brief Defines an internal structure to run several test cases.
  *
- * This structure is a test suite, it is used to run simultaneously several test
- * cases at once.
+ * This structure is called a test suite, it is used to run simultaneously
+ * several test cases at once. It is only used internally and is not accessible
+ * to the programmer as only one instance will ever exist at once.
  *
  * \note This file can not be included directly, it is automatically provided
  *       when \c cute_test.h is included.
@@ -16,15 +17,12 @@
 #endif
 
 
+#include <stdbool.h> /* for bool, true, false */
 
-/**
- * \brief An opaque definition of the test suite.
- */
-typedef struct testsuite CUTE_TestSuite;
 
 
 /**
- * \brief Constructs a test suite from the given test cases.
+ * \brief Constructs the test suite from the given test cases.
  *
  * \note This variadic function assumes to receive \a size variadic arguments of
  *       type \c CUTE_TestCase*.
@@ -32,24 +30,20 @@ typedef struct testsuite CUTE_TestSuite;
  * \param[in] size The number of test cases
  * \param[in] ...  The test cases to include in the suite
  *
- * \return A test suite consisting of the \a size given test cases.
+ * \return \c true if the allocation happened nominally.
  */
-CUTE_CTOR CUTE_TestSuite *CUTE_buildTestSuite(unsigned int size, ...);
+bool CUTE_prepareTestSuite(unsigned int size, ...);
 
 /**
- * \brief Deallocates a test suite.
+ * \brief Deallocates the test suite.
  *
  * \note The test cases included in the suite are also freed.
- *
- * \param[in,out] suite The test suite
  */
-void CUTE_destroyTestSuite(CUTE_TestSuite *suite);
+void CUTE_cleanUpTestSuite(void);
 
 /**
  * \brief Runs the test suite.
  *
- * \param[in] suite The test suite
- *
  * \return An array containing the results of the execution of the tests
  */
-CUTE_RunResults **CUTE_runTestSuite(const CUTE_TestSuite *suite);
+CUTE_RunResults **CUTE_runTestSuite(void);
