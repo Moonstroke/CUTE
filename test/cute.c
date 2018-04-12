@@ -69,7 +69,7 @@ int main(void) {
 
 	results = CUTE_runTestSuite();
 
-	/* TODO use results */
+	CUTE_logResults(2, results);
 
 
 	CUTE_cleanUpTestSuite();
