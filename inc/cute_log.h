@@ -20,4 +20,4 @@ void CUTE_setLogFile(FILE *file) CUTE_NOTNULL(1);
 
 
 void CUTE_logResults(unsigned int number,
-                     const CUTE_RunResults *const results[number]);
+                     const CUTE_RunResults *results[number]);
