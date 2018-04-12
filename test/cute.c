@@ -34,7 +34,7 @@ int main(void) {
 	          test_quit,
 	          test_tstop,
 	          test_ignored;
-	CUTE_RunResults **results;
+	const CUTE_RunResults **results;
 
 	test_1 = CUTE_makeTest(test_1__f);
 	test_2 = CUTE_makeTest(test_2__f);

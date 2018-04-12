@@ -41,9 +41,9 @@ void CUTE_cleanUpTestSuite(void) {
 	free(_suite);
 }
 
-CUTE_RunResults **CUTE_runTestSuite(void) {
+const CUTE_RunResults **CUTE_runTestSuite(void) {
 	for(unsigned int i = 0; i < _suite->number; ++i) {
 		_suite->results[i] = CUTE_runTestCase(_suite->cases[i]);
 	}
-	return _suite->results;
+	return (const CUTE_RunResults**)_suite->results;
 }

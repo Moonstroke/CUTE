@@ -46,4 +46,4 @@ void CUTE_cleanUpTestSuite(void);
  *
  * \return An array containing the results of the execution of the tests
  */
-CUTE_RunResults **CUTE_runTestSuite(void);
+const CUTE_RunResults **CUTE_runTestSuite(void);
