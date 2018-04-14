@@ -5,12 +5,9 @@
 
 
 
-static CUTE_LogFormat _format = CUTE_FORMAT_TEXT;
-static FILE *_file = NULL;
-
-static void _log_text(unsigned int, const CUTE_RunResults *const[]);
-static void _log_xml(unsigned int, const CUTE_RunResults *const[]);
-static void (*_log[])(unsigned int, const CUTE_RunResults *const[]) = {
+typedef void (LogFunc)(unsigned int, const CUTE_RunResults*[], FILE*);
+static LogFunc _log_text, _log_xml;
+static LogFunc *_log[] = {
 	[CUTE_FORMAT_TEXT] = _log_text,
 	[CUTE_FORMAT_XML] = _log_xml,
 };
@@ -25,19 +22,9 @@ static const char *_statutes[] = {
 };
 
 
-void CUTE_setLogFormat(const CUTE_LogFormat f) {
-	_format = f;
-}
-
-void CUTE_setLogFile(FILE *const f) {
-	_file = f;
-}
-
-void CUTE_logResults(const unsigned int n, const CUTE_RunResults *r[n]) {
-	if(_file == NULL) {
-		_file = stderr;
-	}
-	_log[_format](n, r);
+void CUTE_logResults(const unsigned int n, const CUTE_RunResults *r[n],
+                     FILE *const f, const CUTE_LogFormat fmt) {
+	_log[fmt](n, r, f);
 }
 
 
@@ -48,40 +35,41 @@ static CUTE_INLINE void _printtime(const unsigned int n, char s[n],
 	strftime(s, n, fmt, localtime(&t));
 }
 
-void _log_text(const unsigned int n, const CUTE_RunResults *const r[n]) {
+void _log_text(const unsigned int n, const CUTE_RunResults *r[n],
+               FILE *const f) {
 	char t[20];
 	_printtime(20, t, "%F %T");
-	fprintf(_file, "Logging tests execution at %s\n", t);
+	fprintf(f, "Logging tests execution at %s\n", t);
 	for(unsigned int i = 0; i < n; ++i) {
-		fprintf(_file, "Test case #%u, \"%s\" %u/%u\n", i, r[i]->title,
+		fprintf(f, "Test case #%u, \"%s\" %u/%u\n", i, r[i]->title,
 		        r[i]->successes, r[i]->total);
 		for(unsigned int j = 0; j < r[i]->total; ++j) {
-			fprintf(_file, "Test #%u.%u: %s, %s\n", i, j, r[i]->results[j].name,
+			fprintf(f, "Test #%u.%u: %s, %s\n", i, j, r[i]->results[j].name,
 			        _statutes[r[i]->results[j].status]);
 			/* TODO print extra */
 		}
 	}
 }
 
-void _log_xml(const unsigned int n, const CUTE_RunResults *const r[n]) {
+void _log_xml(const unsigned int n, const CUTE_RunResults *r[n],
+              FILE *const f) {
 	char t[21];
 	_printtime(21, t, "%FT%TZ");
-	fputs("<?xml encoding=\"UTF-8\" version=\"1.0\" standalone=\"no\"?>\n",
-	      _file);
-	fputs("<!DOCTYPE run SYSTEM \"cute.dtd\">\n", _file);
-	fprintf(_file, "<run logdate=\"%s\">\n", t);
+	fputs("<?xml encoding=\"UTF-8\" version=\"1.0\" standalone=\"no\"?>\n", f);
+	fputs("<!DOCTYPE run SYSTEM \"cute.dtd\">\n", f);
+	fprintf(f, "<run logdate=\"%s\">\n", t);
 	for(unsigned int i = 0; i < n; ++i) {
-		fprintf(_file, "\t<case title=\"%s\" total=\"%u\" successes=\"%u\">\n",
+		fprintf(f, "\t<case title=\"%s\" total=\"%u\" successes=\"%u\">\n",
 		        r[i]->title, r[i]->total, r[i]->successes);
 		for(unsigned int j = 0; j < r[i]->total; ++j) {
-			fputs("\t\t<test>\n", _file);
-			fprintf(_file, "\t\t\t<name>%s</name>\n", r[i]->results[j].name);
-			fprintf(_file, "\t\t\t<status>%s</status>\n",
+			fputs("\t\t<test>\n", f);
+			fprintf(f, "\t\t\t<name>%s</name>\n", r[i]->results[j].name);
+			fprintf(f, "\t\t\t<status>%s</status>\n",
 			        _statutes[r[i]->results[j].status]);
 			/* TODO print extra */
-			fputs("\t\t</test>\n", _file);
+			fputs("\t\t</test>\n", f);
 		}
-		fputs("\t</case>\n", _file);
+		fputs("\t</case>\n", f);
 	}
-	fputs("</run>\n", _file);
+	fputs("</run>\n", f);
 }

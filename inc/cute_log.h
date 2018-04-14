@@ -13,6 +13,7 @@
 #error "This file must not be included directly"
 #endif
 
+
 #include <stdio.h> /* for FILE, fprintf, fputs */
 
 #include "cute_test.h"
@@ -39,29 +40,27 @@ typedef enum {
 
 
 /**
- * \brief Specifies the log format to output the resutls with.
- *
- * \note The default value is \c CUTE_FORMAT_TEXT.
- *
- * \param[in] format The output format to use.
- */
-void CUTE_setLogFormat(CUTE_LogFormat format);
-
-/**
- * \brief Specifies the file where to log the results.
- *
- * \note If none is ever specified, output is done to \c stderr.
- *
- * \param[in] file The file handle to use
- */
-void CUTE_setLogFile(FILE *file) CUTE_NOTNULL(1);
-
-
-/**
  * \brief Performs the actual logging of the results.
  *
  * \param[in] number  The number of cases to output
- * \param[in] results The resrults of the test cases run
+ * \param[in] results The results of the test cases run
+ * \param[in] logfile The file where to log
+ * \param[in] format  The format to log into
  */
 void CUTE_logResults(unsigned int number,
-                     const CUTE_RunResults *results[number]);
+                     const CUTE_RunResults *results[number], FILE *logfile,
+					 CUTE_LogFormat format) CUTE_NOTNULL(2, 3);
+
+/**
+ * \brief Prints the results to the console, on standard output, as simple text.
+ *
+ * \param[in] number  The number of cases to output
+ * \param[in] results The results of the test cases run
+ *
+ * \sa CUTE_logResults
+ */
+CUTE_INLINE CUTE_NOTNULL(2)
+void CUTE_printResults(unsigned int number,
+                       const CUTE_RunResults *results[number]) {
+	CUTE_logResults(number, results, stdout, CUTE_FORMAT_TEXT);
+}
