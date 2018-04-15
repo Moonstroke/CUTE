@@ -4,6 +4,7 @@
 #include <signal.h> /* for sigaction, struct sigaction, SIG* */
 #include <stdarg.h> /* for va_* */
 #include <stdlib.h> /* for malloc, free, NULL */
+#include <time.h> /* for clock_t, clock, CLOCKS_PER_SEC */
 
 #include "cute_assert.h" /* for CUTE_assumeValue */
 
@@ -81,6 +82,7 @@ extern unsigned int CUTE_getCaseTestsNumber(const CUTE_TestCase*);
 extern const char *CUTE_getCaseTitle(const CUTE_TestCase*);
 
 CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *const tc) {
+	static clock_t start, end;
 	CUTE_RunResults *r = CUTE_prepareResults(tc->title, tc->number);
 	tc->initiate();
 	_set_handlers();
@@ -93,9 +95,12 @@ CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 		}
 		_status = CUTE_STATUS_SUCCESS;
 		tc->before();
+		start = clock();
 		CUTE_runTest(tc->tests[i]);
+		end = clock();
 		tc->after();
 		r->results[i].name = CUTE_getTestName(tc->tests[i]);
+		r->results[i].time = (end - start) / CLOCKS_PER_SEC;
 		switch(r->results[i].status = _status) {
 			case CUTE_STATUS_SUCCESS:
 				++r->successes;
