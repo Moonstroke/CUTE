@@ -24,6 +24,8 @@
 #error "This file must not be included directly"
 #endif
 
+#include <time.h> /* for clock, clock_t */
+
 
 
 /**
@@ -47,6 +49,11 @@ typedef struct {
 	 * \brief The name of the test executed.
 	 */
 	const char *name;
+
+	/**
+	 * \brief The time, in seconds, elapsed during execution of the test.
+	 */
+	double time;
 
 	/**
 	 * \brief The status of the test.
