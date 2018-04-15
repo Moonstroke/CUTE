@@ -69,7 +69,12 @@ int main(void) {
 
 	results = CUTE_runTestSuite();
 
+	info("console output");
 	CUTE_printResults(2, results);
+	info("simple text output");
+	CUTE_logResults(2, results, stderr, CUTE_FORMAT_TEXT);
+	info("XML output");
+	CUTE_logResults(2, results, stderr, CUTE_FORMAT_XML);
 
 
 	CUTE_cleanUpTestSuite();
