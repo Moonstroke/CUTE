@@ -52,6 +52,9 @@ typedef struct {
 
 	/**
 	 * \brief The time, in seconds, elapsed during execution of the test.
+	 *
+	 * \note This represents the CPU time (time during which the test was
+	 *       processed) and not the actual execution time.
 	 */
 	double time;
 
