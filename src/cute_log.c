@@ -30,7 +30,7 @@ void CUTE_logResults(const unsigned int n, const CUTE_RunResults *r[n],
 
 
 static CUTE_INLINE void _gettime(const unsigned int n, char s[n],
-	                               const char *const fmt) {
+                                 const char *const fmt) {
 	time_t t;
 	time(&t);
 	strftime(s, n, fmt, localtime(&t));
@@ -45,8 +45,9 @@ void _log_text(const unsigned int n, const CUTE_RunResults *r[n],
 		fprintf(f, "Test case #%u, \"%s\" %u/%u\n", i, r[i]->title,
 		        r[i]->successes, r[i]->total);
 		for(unsigned int j = 0; j < r[i]->total; ++j) {
-			fprintf(f, "Test #%u.%u: %s, %s\n", i, j, r[i]->results[j].name,
-			        _statutes[r[i]->results[j].status] + 1);
+			fprintf(f, "Test #%u.%u: %s, %s (%.3f s)\n", i, j,
+			        r[i]->results[j].name, _statutes[r[i]->results[j].status]+1,
+			        r[i]->results[j].time);
 			/* TODO print extra */
 		}
 	}
@@ -67,6 +68,7 @@ void _log_xml(const unsigned int n, const CUTE_RunResults *r[n],
 			fprintf(f, "\t\t\t<name>%s</name>\n", r[i]->results[j].name);
 			fprintf(f, "\t\t\t<status>%s</status>\n",
 			        _statutes[r[i]->results[j].status] + 1);
+			fprintf(f, "\t\t\t<time>%.3f</time>\n", r[i]->results[j].time);
 			/* TODO print extra */
 			fputs("\t\t</test>\n", f);
 		}
@@ -86,8 +88,8 @@ static void _printtest(FILE *const f, const char *const c,
 		[CUTE_STATUS_CANCELED] = "34" /* blue */
 	};
 	const CUTE_TestStatus s = tr->status;
-	fprintf(f, "%s\u2500 \x1b[1;7;%sm %c \x1b[0m %s (%s)\n", c, testclrs[s],
-	        _statutes[s][0], tr->name, _statutes[s] + 1);
+	fprintf(f, "%s\u2500 \x1b[1;7;%sm %c \x1b[0m %s (%s, %.3f s)\n", c,
+	        testclrs[s], _statutes[s][0], tr->name, _statutes[s] + 1, tr->time);
 }
 void _log_console(const unsigned int n, const CUTE_RunResults *r[n],
                   FILE *const f) {

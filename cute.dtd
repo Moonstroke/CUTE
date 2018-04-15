@@ -4,6 +4,7 @@
 <!ATTLIST title (#CDATA)>
 <!ATTLIST case total (#PCDATA)>
 <!ATTLIST case successes (#PCDATA)>
-<!ELEMENT test (name, status)>
+<!ELEMENT test (name, status, time)>
 <!ELEMENT name (#CDATA)>
 <!ELEMENT status (#CDATA)>
+<!ELEMENT time (#CDATA)>
