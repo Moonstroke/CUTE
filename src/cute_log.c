@@ -29,7 +29,7 @@ void CUTE_logResults(const unsigned int n, const CUTE_RunResults *r[n],
 }
 
 
-static CUTE_INLINE void _printtime(const unsigned int n, char s[n],
+static CUTE_INLINE void _gettime(const unsigned int n, char s[n],
 	                               const char *const fmt) {
 	time_t t;
 	time(&t);
@@ -39,7 +39,7 @@ static CUTE_INLINE void _printtime(const unsigned int n, char s[n],
 void _log_text(const unsigned int n, const CUTE_RunResults *r[n],
                FILE *const f) {
 	char t[20];
-	_printtime(20, t, "%F %T");
+	_gettime(20, t, "%F %T");
 	fprintf(f, "Logging tests execution at %s\n", t);
 	for(unsigned int i = 0; i < n; ++i) {
 		fprintf(f, "Test case #%u, \"%s\" %u/%u\n", i, r[i]->title,
@@ -55,7 +55,7 @@ void _log_text(const unsigned int n, const CUTE_RunResults *r[n],
 void _log_xml(const unsigned int n, const CUTE_RunResults *r[n],
               FILE *const f) {
 	char t[21];
-	_printtime(21, t, "%FT%TZ");
+	_gettime(21, t, "%FT%TZ");
 	fputs("<?xml encoding=\"UTF-8\" version=\"1.0\" standalone=\"no\"?>\n", f);
 	fputs("<!DOCTYPE run SYSTEM \"cute.dtd\">\n", f);
 	fprintf(f, "<run logdate=\"%s\">\n", t);
