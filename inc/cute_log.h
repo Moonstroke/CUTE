@@ -36,6 +36,14 @@ typedef enum {
 	 *       to output the results.
 	 */
 	CUTE_FORMAT_XML,
+
+	/**
+	 * \brief Display the results in a format designed for a console window.
+	 *
+	 * \note This format uses ANSI color codes, which are not supported by all
+	 *       terminal emulators.
+	 */
+	CUTE_FORMAT_CONSOLE,
 } CUTE_LogFormat;
 
 
@@ -62,5 +70,5 @@ void CUTE_logResults(unsigned int number,
 CUTE_INLINE CUTE_NOTNULL(2)
 void CUTE_printResults(unsigned int number,
                        const CUTE_RunResults *results[number]) {
-	CUTE_logResults(number, results, stdout, CUTE_FORMAT_TEXT);
+	CUTE_logResults(number, results, stdout, CUTE_FORMAT_CONSOLE);
 }

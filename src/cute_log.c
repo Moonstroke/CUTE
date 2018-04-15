@@ -6,19 +6,20 @@
 
 
 typedef void (LogFunc)(unsigned int, const CUTE_RunResults*[], FILE*);
-static LogFunc _log_text, _log_xml;
+static LogFunc _log_text, _log_xml, _log_console;
 static LogFunc *_log[] = {
 	[CUTE_FORMAT_TEXT] = _log_text,
 	[CUTE_FORMAT_XML] = _log_xml,
+	[CUTE_FORMAT_CONSOLE] = _log_console,
 };
 
 static const char *_statutes[] = {
-	[CUTE_STATUS_SUCCESS] = "Success",
-	[CUTE_STATUS_FAILURE] = "Failure",
-	[CUTE_STATUS_ERROR] = "Error",
-	[CUTE_STATUS_IGNORED] = "Ignored",
-	[CUTE_STATUS_SKIPPED] = "Skipped",
-	[CUTE_STATUS_CANCELED] = "Canceled"
+	[CUTE_STATUS_SUCCESS] = ".Success",
+	[CUTE_STATUS_FAILURE] = "!Failure",
+	[CUTE_STATUS_ERROR] = "xError",
+	[CUTE_STATUS_IGNORED] = "-Ignored",
+	[CUTE_STATUS_SKIPPED] = ",Skipped",
+	[CUTE_STATUS_CANCELED] = "/Canceled"
 };
 
 
@@ -45,7 +46,7 @@ void _log_text(const unsigned int n, const CUTE_RunResults *r[n],
 		        r[i]->successes, r[i]->total);
 		for(unsigned int j = 0; j < r[i]->total; ++j) {
 			fprintf(f, "Test #%u.%u: %s, %s\n", i, j, r[i]->results[j].name,
-			        _statutes[r[i]->results[j].status]);
+			        _statutes[r[i]->results[j].status] + 1);
 			/* TODO print extra */
 		}
 	}
@@ -65,11 +66,37 @@ void _log_xml(const unsigned int n, const CUTE_RunResults *r[n],
 			fputs("\t\t<test>\n", f);
 			fprintf(f, "\t\t\t<name>%s</name>\n", r[i]->results[j].name);
 			fprintf(f, "\t\t\t<status>%s</status>\n",
-			        _statutes[r[i]->results[j].status]);
+			        _statutes[r[i]->results[j].status] + 1);
 			/* TODO print extra */
 			fputs("\t\t</test>\n", f);
 		}
 		fputs("\t</case>\n", f);
 	}
 	fputs("</run>\n", f);
+}
+
+static void _printtest(FILE *const f, const char *const c,
+                       const CUTE_TestResult *const tr) {
+	static const char testclrs[][3] = {
+		[CUTE_STATUS_SUCCESS] = "92", /* bright blue */
+		[CUTE_STATUS_FAILURE] = "91", /* bright red */
+		[CUTE_STATUS_ERROR] = "31",   /* red */
+		[CUTE_STATUS_IGNORED] = "90", /* bright black (dark grey) */
+		[CUTE_STATUS_SKIPPED] = "36", /* cyan */
+		[CUTE_STATUS_CANCELED] = "34" /* blue */
+	};
+	const CUTE_TestStatus s = tr->status;
+	fprintf(f, "%s\u2500 \x1b[1;7;%sm %c \x1b[0m %s (%s)\n", c, testclrs[s],
+	        _statutes[s][0], tr->name, _statutes[s] + 1);
+}
+void _log_console(const unsigned int n, const CUTE_RunResults *r[n],
+                  FILE *const f) {
+	for(unsigned int i = 0; i < n; ++i) {
+		fprintf(f, "%s\n", r[i]->title);
+		unsigned int j;
+		for(j = 0; j < r[i]->total - 1; ++j) {
+			_printtest(f, "\u251c", &(r[i]->results[j]));
+		}
+		_printtest(f, "\u2514", &(r[i]->results[j]));
+	}
 }
