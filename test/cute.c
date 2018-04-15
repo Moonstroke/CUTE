@@ -52,8 +52,8 @@ int main(void) {
 	CUTE_setCaseAfter(case_1, tearDown);
 	CUTE_addCaseTest(case_1, test_1);
 	CUTE_addCaseTest(case_1, test_abort);
-	CUTE_addCaseTest(case_1, test_quit);
 	CUTE_addCaseTest(case_1, test_tstop);
+	CUTE_addCaseTest(case_1, test_quit);
 
 	case_2 = CUTE_newTestCase("case 2", 4);
 	CUTE_setCaseInitiate(case_2, init);
