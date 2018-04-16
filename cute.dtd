@@ -1,7 +1,7 @@
 <!ELEMENT run (case+)>
 <!ATTLIST run logdate (#PCDATA)>
 <!ELEMENT case (test+)>
-<!ATTLIST title (#CDATA)>
+<!ATTLIST case title (#CDATA)>
 <!ATTLIST case total (#PCDATA)>
 <!ATTLIST case successes (#PCDATA)>
 <!ELEMENT test (name, status, time)>
