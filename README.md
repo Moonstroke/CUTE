@@ -140,6 +140,13 @@ This header declares the structure `CUTE_TestCase`, defined opaquely in
 This header declare the structure `CUTE_TestSuite` defined opaquely in
 `src/cute_suite.c` and functions to operate on it.
 
+### d) Test loggers: `cute_log.h`
+
+This header declares an interface to log the results of the tests run in a file,
+or on `stdout` by default. An enumeration controls the format of the output:
+simple text, XML, or enhanced console output (box-drawing characters and ANSI
+color codes). See IV. for more details.
+
 
 
 ## III. Running tests
@@ -191,7 +198,19 @@ and the `terminate` function is still called before the case returns.
 
 
 
-## IV. Technicals
+## IV. Logging results
+
+
+The header `cute_log.h` provides the function `CUTE_logResults`, that prints the
+test results it is given in a file with specified format; the format is taken
+from the enumeration `CUTE_LogFormat`. The results are given as two parameters:
+first, an integer defined as the size of the next parameter, an array of
+constant pointers to `CUTE_RunResults` instances. The given file must be a valid
+file handle (*stdio*'s `FILE*`) and be opened for writing.
+
+
+
+## V. Technicals
 
 
 ### 1. Portability and standards compliance
