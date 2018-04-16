@@ -1,6 +1,5 @@
 #include "cute_test.h"
 
-#include <clog.h> /* for debug */
 #include <signal.h> /* for sigaction, struct sigaction, SIG* */
 #include <stdarg.h> /* for va_* */
 #include <stdlib.h> /* for malloc, free, NULL */
@@ -90,7 +89,6 @@ CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 		if(_ignore(tc->tests[i])) {
 			r->results[i].name = _stripignore(tc->tests[i]);
 			r->results[i].status = CUTE_STATUS_IGNORED;
-			debug("Ignored %s", _stripignore(tc->tests[i]));
 			continue;
 		}
 		_status = CUTE_STATUS_SUCCESS;
@@ -104,21 +102,16 @@ CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 		switch(r->results[i].status = _status) {
 			case CUTE_STATUS_SUCCESS:
 				++r->successes;
-				debug("%s: success", CUTE_getTestName(tc->tests[i]));
 				break;
 			case CUTE_STATUS_FAILURE:
-				debug("Test %s failed", CUTE_getTestName(tc->tests[i]));
 				break;
 			case CUTE_STATUS_ERROR:
-				debug("%s test error", CUTE_getTestName(tc->tests[i]));
 				break;
 			case CUTE_STATUS_IGNORED:
 				break; /* can't occur, only here for the warning */
 			case CUTE_STATUS_SKIPPED:
-				debug("test %s skipped", CUTE_getTestName(tc->tests[i]));
 				continue;
 			case CUTE_STATUS_CANCELED:
-				debug("User interrupted %s", CUTE_getTestName(tc->tests[i]));
 				for(; i < tc->number; ++i) { /* cancel all remaining tests */
 					r->results[i].name = CUTE_getTestName(tc->tests[i]);
 					r->results[i].status = CUTE_STATUS_CANCELED;
