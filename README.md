@@ -238,6 +238,10 @@ To test the project, simply run:
 
     make test
 
+Please note that the test source dependes on my other project,
+[Clog](https://github.com/Moonstroke/Clog). Be sure to have it installed before
+running this command.
+
 The directory `test` contains a test program of the project, and can serve in
 the same time as an example on how to use the different structures of the
 project.
