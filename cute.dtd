@@ -1,10 +1,22 @@
+<!-- The root element -->
 <!ELEMENT run (case+)>
+<!-- The date and time of the logging (in ISO 8601 format) -->
 <!ATTLIST run logdate (#PCDATA)>
+
+<!-- A test case -->
 <!ELEMENT case (test+)>
+<!-- The name of the test case -->
 <!ATTLIST case title (#CDATA)>
+<!-- The total number of tests -->
 <!ATTLIST case total (#PCDATA)>
+<!-- The number of tests that passed -->
 <!ATTLIST case successes (#PCDATA)>
+
+<!-- A single test -->
 <!ELEMENT test (name, status, time)>
+<!-- The name of the test -->
 <!ELEMENT name (#CDATA)>
+<!-- The status of the test -->
 <!ELEMENT status (#CDATA)>
+<!-- The CPU time used by the execution of the test -->
 <!ELEMENT time (#CDATA)>
