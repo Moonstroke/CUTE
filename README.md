@@ -172,6 +172,10 @@ A single running test can be stopped when the program receives a `SIGTSTP`
 signal. Therefore,  when run interactively on console, a test can be skipped by
 hitting Ctrl-Z.
 
+*NOTE*: Actually, typing Ctrl-Z sends a `SIGTSTP` signal, *and* sends the
+process to the background -- to return it to the foreground the user has to
+enter `fg` afterwards.
+
 
 ### 4. Cancelling tests
 
