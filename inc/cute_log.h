@@ -14,7 +14,7 @@
 #endif
 
 
-#include <stdio.h> /* for FILE, fprintf, fputs */
+#include <stdio.h> /* for FILE */
 
 #include "cute_test.h"
 

@@ -24,8 +24,6 @@
 #error "This file must not be included directly"
 #endif
 
-#include <time.h> /* for clock, clock_t */
-
 
 
 /**

@@ -1,6 +1,6 @@
 #include "cute_assert.h"
 
-#include <stdio.h> /* for fputs, stderr */
+#include <stdio.h> /* for fprintf, stderr */
 #include <signal.h> /* for raise, SIGABRT */
 
 
