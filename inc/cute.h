@@ -21,6 +21,11 @@
 #endif
 
 /**
+ * \defgroup funcattrs Function attributes
+ * \{
+ */
+
+/**
  * \brief The function is inlined everywhere it is met.
  */
 #define CUTE_INLINE __attribute__((__always_inline__)) inline
@@ -50,6 +55,7 @@
  */
 #define CUTE_MEMBER CUTE_NOTNULL(1)
 
+/** \} */
 
 
 #if !defined(CUTE_TEST_H) && !defined(CUTE_ASSERT_H)

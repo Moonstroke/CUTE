@@ -19,6 +19,10 @@
 #include "cute.h"
 
 
+/**
+ * \defgroup assertions Assertions macros
+ * \{
+ */
 
 /**
  * \def CUTE_runTimeAssert
@@ -97,6 +101,8 @@
  */
 void CUTE_fail(const char *msg, const char *file, unsigned int line,
                const char *func);
+
+/** \} */
 
 
 /**
