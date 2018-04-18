@@ -21,49 +21,16 @@
 
 
 
-/**
- * \brief A set of coherent tests.
- */
+/** A set of coherent tests. */
 typedef struct {
-	/**
-	 * \brief The title of the case.
-	 */
-	const char *title;
-
-	/**
-	 * \brief The procedure to call before all tests.
-	 */
-	CUTE_Proc *initiate;
-
-	/**
-	 * \brief The procedure to call after all tests.
-	 */
-	CUTE_Proc *terminate;
-
-	/**
-	 * \brief The procedure to call before each test.
-	 */
-	CUTE_Proc *before;
-
-	/**
-	 * \brief The procedure to call after each test.
-	 */
-	CUTE_Proc *after;
-
-	/**
-	 * \brief The maximum number of tests to contain.
-	 */
-	unsigned int capacity;
-
-	/**
-	 * \brief The number of tests actually in the case.
-	 */
-	unsigned int number;
-
-	/**
-	 * \brief The tests.
-	 */
-	CUTE_Test tests[];
+	const char *title;     /**< The title of the case. */
+	CUTE_Proc *initiate;   /**< The procedure to call before all tests. */
+	CUTE_Proc *terminate;  /**< The procedure to call after all tests. */
+	CUTE_Proc *before;     /**< The procedure to call before each test. */
+	CUTE_Proc *after;      /**< The procedure to call after each test. */
+	unsigned int capacity; /**< The maximum number of tests to contain. */
+	unsigned int number;   /**< The number of tests actually in the case. */
+	CUTE_Test tests[];     /**< The tests. */
 } CUTE_TestCase;
 
 

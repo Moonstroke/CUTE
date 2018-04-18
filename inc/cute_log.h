@@ -20,13 +20,9 @@
 
 
 
-/**
- * \brief Represents the format in which output the results.
- */
+/** Represents the format in which output the results. */
 typedef enum {
-	/**
-	 * \brief Output the results as simple text.
-	 */
+	/** Output the results as simple text. */
 	CUTE_FORMAT_TEXT,
 
 	/**

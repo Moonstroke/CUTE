@@ -26,9 +26,7 @@
 
 
 
-/**
- * \brief Represents the status of an executed test.
- */
+/** Represents the status of an executed test. */
 typedef enum {
 	CUTE_STATUS_SUCCESS,
 	CUTE_STATUS_FAILURE,
@@ -39,13 +37,9 @@ typedef enum {
 } CUTE_TestStatus;
 
 
-/**
- * \brief The info about the execution of a test.
- */
+/** The info about the execution of a test. */
 typedef struct {
-	/**
-	 * \brief The name of the test executed.
-	 */
+	/** The name of the test executed. */
 	const char *name;
 
 	/**
@@ -56,14 +50,10 @@ typedef struct {
 	 */
 	double time;
 
-	/**
-	 * \brief The status of the test.
-	 */
+	/** The status of the test. */
 	CUTE_TestStatus status;
 
-	/**
-	 * \brief Extra information about the test status.
-	 */
+	/** Extra information about the test status. */
 	int extra;
 } CUTE_TestResult;
 
@@ -72,24 +62,10 @@ typedef struct {
  * \brief The info about all the tests after the execution of a test case.
  */
 typedef struct {
-	/**
-	 * \brief The title of the test case.
-	 */
-	const char *title;
-	/**
-	 * \brief The total number of tests run.
-	 */
-	unsigned int total;
-
-	/**
-	 * \brief The number of tests that passed.
-	 */
-	unsigned int successes;
-
-	/**
-	 * \brief The results of the tests.
-	 */
-	CUTE_TestResult results[];
+	const char *title;         /**< The title of the test case. */
+	unsigned int total;        /**< The total number of tests run. */
+	unsigned int successes;    /**< The number of tests that passed. */
+	CUTE_TestResult results[]; /**< The results of the tests. */
 } CUTE_RunResults;
 
 /**

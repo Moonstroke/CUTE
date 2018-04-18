@@ -14,10 +14,7 @@
 
 
 #ifndef __GNUC__
-/**
- * \brief Empty declaration for non-GNU C.
- */
-# define __attribute__(x)
+# define __attribute__(x) /**< Empty declaration for non-GNU C. */
 #endif
 
 /**
@@ -25,14 +22,10 @@
  * \{
  */
 
-/**
- * \brief The function is inlined everywhere it is met.
- */
+/** The function is inlined everywhere it is met. */
 #define CUTE_INLINE __attribute__((__always_inline__)) inline
 
-/**
- * \brief The function does not affect external data.
- */
+/** The function does not affect external data. */
 #define CUTE_PURE __attribute__((__pure__, __warn_unused_result__))
 
 /**
@@ -42,9 +35,7 @@
  */
 #define CUTE_NOTNULL(...) __attribute__((__nonnull__(__VA_ARGS__)))
 
-/**
- * \brief The function allocates memory on the heap.
- */
+/** The function allocates memory on the heap. */
 #define CUTE_CTOR __attribute__((__malloc__))
 
 /**
