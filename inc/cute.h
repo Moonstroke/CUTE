@@ -38,23 +38,6 @@
 #define CUTE_NOTNULL(...) __attribute__((__nonnull__(__VA_ARGS__)))
 
 /**
- * \brief The argument at given index, counting backwards, must be \c NULL.
- *
- * \note This attribute is only to be used on variadic functions.
- *
- * \param i The index
- */
-#define CUTE_NULL_GUARD(i) __attribute__((__sentinel__(i)))
-
-/**
- * \brief The last argument of the function \e must be an explicit \c NULL.
- *
- * \note As for \a CUTE_NULL_GUARD, this attribute is only valid on variadic
- *       functions.
- */
-#define CUTE_LAST_ARG_NULL CUTE_NULL_GUARD(0)
-
-/**
  * \brief The function allocates memory on the heap.
  */
 #define CUTE_CTOR __attribute__((__malloc__))
@@ -66,19 +49,6 @@
  *       ensures that the first argument, the instance pointer, is not \c NULL.
  */
 #define CUTE_MEMBER CUTE_NOTNULL(1)
-
-/**
- * \brief Implies that the function never returns.
- *
- * \note Such a function (like the standard \a exit(3), or \a longjmp(3)) should
- *       always be declared as \c void.
- */
-#define CUTE_NORETURN __attribute__((__noreturn__))
-
-/**
- * \brief The value returned must be used or stored.
- */
-#define CUTE_NODISCARD __attribute__((__warn_unused_result__))
 
 
 
