@@ -97,7 +97,7 @@ the directory `inc`.
 
 This header contains common declarations for the project (like function
 attributes) and is included by all the headers in the project. However, it can
-also be used to include the whole project if `#include`d directly.
+also be used to include the whole project, if it is explicitly included.
 
 
 ### 2. Assertions: `cute_assert.h`
@@ -116,7 +116,7 @@ This header declares:
 This header is to be included to provide the declarations of unit tests and
 related: test cases, test suites.
 These declarations are spread across different sub-headers, but those are all
-dependent on `cute_test.h` and can not be `#include`d directly.
+dependent on `cute_test.h` and can not be included directly.
 
 #### a) Test results: `cute_result.h`
 
