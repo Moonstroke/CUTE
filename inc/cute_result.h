@@ -28,12 +28,12 @@
 
 /** Represents the status of an executed test. */
 typedef enum {
-	CUTE_STATUS_SUCCESS,
-	CUTE_STATUS_FAILURE,
-	CUTE_STATUS_ERROR,
-	CUTE_STATUS_IGNORED,
-	CUTE_STATUS_SKIPPED,
-	CUTE_STATUS_CANCELED
+	CUTE_STATUS_SUCCESS,  /**< The test succeeded. */
+	CUTE_STATUS_FAILURE,  /**< An assertion failed in the test. */
+	CUTE_STATUS_ERROR,    /**< An error occurred during execution. */
+	CUTE_STATUS_IGNORED,  /**< The test was not run. */
+	CUTE_STATUS_SKIPPED,  /**< The execution of the test was stopped. */
+	CUTE_STATUS_CANCELED  /**< The whole test case was stopped. */
 } CUTE_TestStatus;
 
 
