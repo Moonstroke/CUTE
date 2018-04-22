@@ -82,13 +82,14 @@ extern const char *CUTE_getCaseTitle(const CUTE_TestCase*);
 
 CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 	static clock_t start, end;
-	CUTE_RunResults *r = CUTE_prepareResults(tc->title, tc->number);
-	tc->initiate();
+	CUTE_RunResults *const r = CUTE_prepareResults(tc->title, tc->number);
 	_set_handlers();
+	tc->initiate();
 	for(unsigned int i = 0; i < tc->number; ++i) {
 		if(_ignore(tc->tests[i])) {
 			r->results[i].name = _stripignore(tc->tests[i]);
 			r->results[i].status = CUTE_STATUS_IGNORED;
+			r->results[i].time = -1;
 			continue;
 		}
 		_status = CUTE_STATUS_SUCCESS;
@@ -103,12 +104,10 @@ CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *const tc) {
 			case CUTE_STATUS_SUCCESS:
 				++r->successes;
 				break;
-			case CUTE_STATUS_FAILURE:
-				break;
-			case CUTE_STATUS_ERROR:
-				break;
-			case CUTE_STATUS_IGNORED:
-				break; /* can't occur, only here for the warning */
+			case CUTE_STATUS_FAILURE: break;
+			case CUTE_STATUS_ERROR: break;
+			case CUTE_STATUS_IGNORED: break; /* can't occur, only here for the
+			                                    warning */
 			case CUTE_STATUS_SKIPPED:
 				continue;
 			case CUTE_STATUS_CANCELED:
