@@ -1,0 +1,24 @@
+# Generate two builds with both GCC and Clang
+language: c
+compiler:
+  - gcc
+  - clang
+
+
+# Activate builds only for master
+branches:
+  only:
+    - master
+
+
+# Use Docker image containing my other repo Clog
+services:
+  - docker
+before_install:
+  - docker pull joh1/clog
+
+
+# Build the project and launch the tests
+script:
+  - make
+  - make test
