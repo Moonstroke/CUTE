@@ -18,7 +18,6 @@ before_install:
   - docker pull joh1/clog
 
 
-# Build the project and launch the tests
+# Build the project and launch the tests from the image
 script:
-  - make
-  - make test
+  - docker run joh1/clog /bin/sh -c 'make && make test'
