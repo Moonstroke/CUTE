@@ -1,23 +1,33 @@
-# Generate two builds with both GCC and Clang
+# This is a C project
 language: c
+
+# Generate two builds with both GCC and Clang
 compiler:
   - gcc
   - clang
-
 
 # Activate builds only for master
 branches:
   only:
     - master
 
-
-# Use Docker image containing my other repo Clog
+# Enable Docker
 services:
   - docker
+
+
+# Use Docker image containing my other repo Clog
 before_install:
   - docker pull joh1/clog
+  - docker run joh1/clog --detach --name clog
+
+# Fetch the project from github inside the container
+install:
+  - docker exec clog git clone https://github.com/Moonstroke/CUTE.git cute
+  - docker exec clog cd cute
 
 
-# Build the project and launch the tests from the image
+# Launch the tests from the container
 script:
-  - docker run joh1/clog /bin/sh -c 'make && make test'
+  - docker exec clog make
+  - docker exec clog make test
