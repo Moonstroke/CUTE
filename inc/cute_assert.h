@@ -69,6 +69,14 @@
 #define CUTE_assertEquals(x, y) CUTE_runTimeAssert((x) == (y))
 
 /**
+ * \brief Ensures that the two values are not equal.
+ *
+ * \param[in] x The first value
+ * \param[in] y The second value
+ */
+#define CUTE_assertNotEquals(x, y) CUTE_runTimeAssert((x) != (y))
+
+/**
  * \brief Ensures that the given values compare to a result value with the given
  *        function.
  * \param[in] x    The first value to test
