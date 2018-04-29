@@ -1,5 +1,11 @@
 # CUTE
+
+[![Build Status](https://travis-ci.org/Moonstroke/CUTE.svg?branch=master)](
+https://travis-ci.org/Moonstroke/CUTE)
+
+
 ## C Unit Testing Environment
+
 
 This project defines a *[xUnit](https://en.wikipedia.org/wiki/XUnit)*-like unit
 testing environment in C.
