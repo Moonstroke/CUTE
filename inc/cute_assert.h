@@ -15,6 +15,7 @@
 
 
 #include <string.h> /* for strcmp */
+#include <errno.h> /* for E* */
 
 #include "cute.h"
 
@@ -95,6 +96,18 @@
  */
 #define CUTE_assertStringEquals(s1, s2) \
 	CUTE_assertEqualsWith((s1), (s2), strcmp, 0)
+
+
+/**
+ * Ensures that \c errno matches the given error code.
+ *
+ * \param[in] errcode The error code to check
+ */
+#define CUTE_assertErrnoEquals(errcode) CUTE_assertEquals(errno, errcode)
+
+
+/** \brief Ensures that no error code is set. */
+#define CUTE_assertNoError() CUTE_assertErrnoEquals(0)
 
 
 /**
