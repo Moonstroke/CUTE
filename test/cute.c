@@ -2,7 +2,7 @@
 
 #include <clog.h>
 #include <signal.h> /* for raise, SIGINT, SIGQUIT, SIGABRT, SIGTSTP */
-#include <stdlib.h> /* for free */
+#include <stdlib.h> /* for free, EXIT_SUCCESS */
 
 
 
@@ -78,7 +78,7 @@ int main(void) {
 
 
 	CUTE_cleanUpTestSuite();
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 void init(void) {
