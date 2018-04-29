@@ -13,37 +13,38 @@ struct testsuite {
 	CUTE_TestCase **cases;
 	CUTE_RunResults **results;
 };
-struct testsuite *_suite = NULL;
+struct testsuite _suite = {
+	.number = 0,
+	.cases = NULL,
+	.results = NULL
+};
 
 bool CUTE_prepareTestSuite(const unsigned int n, ...) {
-	_suite = malloc(sizeof(struct testsuite));
-	CUTE_assumeValue(_suite != NULL, false);
-	_suite->cases = calloc(n, sizeof(CUTE_TestCase*));
-	CUTE_assumeValue(_suite->cases != NULL, false);
-	_suite->results = calloc(n, sizeof(CUTE_RunResults*));
-	CUTE_assumeValue(_suite->results != NULL, false);
+	_suite.cases = calloc(n, sizeof(CUTE_TestCase*));
+	CUTE_assumeValue(_suite.cases != NULL, false);
+	_suite.results = calloc(n, sizeof(CUTE_RunResults*));
+	CUTE_assumeValue(_suite.results != NULL, false);
 	va_list args;
 	va_start(args, n);
-	for(unsigned int i = 0; i < (_suite->number = n); ++i) {
-		_suite->cases[i] = va_arg(args, CUTE_TestCase*);
+	for(unsigned int i = 0; i < (_suite.number = n); ++i) {
+		_suite.cases[i] = va_arg(args, CUTE_TestCase*);
 	}
 	va_end(args);
 	return true;
 }
 
 void CUTE_cleanUpTestSuite(void) {
-	for(unsigned int i = 0; i < _suite->number; ++i) {
-		CUTE_freeTestCase(_suite->cases[i]);
-		CUTE_cleanUpResults(_suite->results[i]);
+	for(unsigned int i = 0; i < _suite.number; ++i) {
+		CUTE_freeTestCase(_suite.cases[i]);
+		CUTE_cleanUpResults(_suite.results[i]);
 	}
-	free(_suite->cases);
-	free(_suite->results);
-	free(_suite);
+	free(_suite.cases);
+	free(_suite.results);
 }
 
 const CUTE_RunResults **CUTE_runTestSuite(void) {
-	for(unsigned int i = 0; i < _suite->number; ++i) {
-		_suite->results[i] = CUTE_runTestCase(_suite->cases[i]);
+	for(unsigned int i = 0; i < _suite.number; ++i) {
+		_suite.results[i] = CUTE_runTestCase(_suite.cases[i]);
 	}
-	return (const CUTE_RunResults**)_suite->results;
+	return (const CUTE_RunResults**)_suite.results;
 }
