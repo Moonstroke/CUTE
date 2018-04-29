@@ -20,6 +20,12 @@
 #include "cute.h"
 
 
+
+/** External declaration of the shared error variable. */
+extern int errno;
+
+
+
 /**
  * \defgroup assertions Assertions macros
  * \{
