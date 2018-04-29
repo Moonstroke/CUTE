@@ -19,7 +19,7 @@ services:
 # Use Docker image containing my other repo Clog
 before_install:
   - docker pull joh1/clog
-  - docker run joh1/clog --detach --name clog
+  - docker run joh1/clog --detach --interactive --name clog
 
 # Fetch the project from github inside the container
 install:
