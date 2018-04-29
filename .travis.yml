@@ -24,10 +24,8 @@ before_install:
 # Fetch the project from github inside the container
 install:
   - docker exec clog git clone https://github.com/Moonstroke/CUTE.git cute
-  - docker exec clog cd cute
 
 
 # Launch the tests from the container
 script:
-  - docker exec clog make
-  - docker exec clog make test
+  - docker exec clog /bin/sh -c 'cd cute && make && make test'
