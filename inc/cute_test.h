@@ -61,6 +61,12 @@ typedef struct {
 #define CUTE_runTest(test) (test).proc()
 
 
+/**
+ * Exits the program with the appropriate status (\c EXIT_SUCCESS if all tests
+ * run passed, \c EXIT_FAILURE otherwise).
+ */
+CUTE_NORETURN void CUTE_exit(void);
+
 
 #include "cute_result.h"
 #include "cute_case.h"

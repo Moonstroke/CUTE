@@ -1,7 +1,7 @@
 #include "cute_test.h"
 
 #include <stdarg.h> /* for va_* */
-#include <stdlib.h> /* for malloc, free */
+#include <stdlib.h> /* for malloc, free, exit, EXIT_* */
 
 #include "cute_assert.h" /* for CUTE_assumeValue */
 
@@ -9,12 +9,13 @@
 
 struct testsuite {
 	unsigned int number;
-	char _padding[4];
+	int status; /* = EXIT_SUCCESS or EXIT_FAILURE */
 	CUTE_TestCase **cases;
 	CUTE_RunResults **results;
 };
 struct testsuite _suite = {
 	.number = 0,
+	.status = EXIT_SUCCESS,
 	.cases = NULL,
 	.results = NULL
 };
@@ -45,6 +46,16 @@ void CUTE_cleanUpTestSuite(void) {
 const CUTE_RunResults **CUTE_runTestSuite(void) {
 	for(unsigned int i = 0; i < _suite.number; ++i) {
 		_suite.results[i] = CUTE_runTestCase(_suite.cases[i]);
+		/* set appropriate value for the exit status */
+		if(_suite.status == EXIT_SUCCESS
+		   && _suite.results[i]->successes != _suite.results[i]->total) {
+			_suite.status = EXIT_FAILURE;
+		}
 	}
 	return (const CUTE_RunResults**)_suite.results;
+}
+
+/* declared in cute_test.h */
+void CUTE_exit(void) {
+	exit(_suite.status);
 }

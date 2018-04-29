@@ -28,6 +28,9 @@
 /** The function does not affect external data. */
 #define CUTE_PURE __attribute__((__pure__, __warn_unused_result__))
 
+/** The function does not return to the caller. */
+#define CUTE_NORETURN __attribute__((__noreturn__))
+
 /**
  * \brief The arguments to the function given here must not be \c NULL.
  *
