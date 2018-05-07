@@ -121,10 +121,11 @@ testclean:
 
 # Install the project for system use
 install:
-	@cp --update --target-directory=$(INST_DIR)/include $(INC_DIR)/*.h
+	@mkdir -p $(INST_DIR)/include/$(PROJECT_NAME)
+	@cp --update --target-directory=$(INST_DIR)/include/$(PROJECT_NAME) $(INC_DIR)/*.h
 	@cp --update --target-directory=$(INST_DIR)/lib $(AR_LIB)
 
 # Remove the project from the system
 uninstall:
-	@rm -f $(patsubst $(INC_DIR)/%,$(INST_DIR)/include/%,$(wildcard $(INC_DIR)/*))
+	@rm -rf $(INST_DIR)/include/$(PROJECT_NAME)
 	@rm -f $(INST_DIR)/lib/$(AR_LIB)
