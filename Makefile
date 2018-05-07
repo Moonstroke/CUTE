@@ -2,7 +2,7 @@
 
 
 # Project name
-PROJECT_NAME := cute
+PROJECT_NAME := CUTE
 
 
 # Project directories
