@@ -13,12 +13,7 @@ struct testsuite {
 	CUTE_TestCase **cases;
 	CUTE_RunResults **results;
 };
-struct testsuite _suite = {
-	.number = 0,
-	.status = EXIT_SUCCESS,
-	.cases = NULL,
-	.results = NULL
-};
+static struct testsuite _suite = {0};
 
 bool CUTE_prepareTestSuite(const unsigned int n, ...) {
 	_suite.cases = calloc(n, sizeof(CUTE_TestCase*));
