@@ -22,8 +22,8 @@ static void _handler(const int signum) {
 	_status = statutes[signum];
 }
 
-#define SET_HANDLER_FOR(signum, sigact) if(sigaction(signum, &sigact, NULL)) \
-	return;
+#define SET_HANDLER_FOR(signum, sigact) \
+	if(sigaction(signum, &sigact, NULL) < 0) return;
 
 static void _set_handlers(void) {
 	struct sigaction act;
