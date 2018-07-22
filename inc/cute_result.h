@@ -20,7 +20,7 @@
  *   case, the number of tests run, and the number of tests that succeeded.
  */
 
-#ifndef CUTE_TEST_H
+#ifndef CUTE_TEST_ALLOW_SUBINCLUDES
 #error "This file must not be included directly"
 #endif
 

@@ -9,7 +9,7 @@
  * well as an output format from within the \c enum \a CUTE_LogFormat.
  */
 
-#ifndef CUTE_TEST_H
+#ifndef CUTE_TEST_ALLOW_SUBINCLUDES
 #error "This file must not be included directly"
 #endif
 

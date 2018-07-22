@@ -12,7 +12,7 @@
  * \note This file can not be included directly, it is automatically provided
  *       when \c cute_test.h is included.
  */
-#ifndef CUTE_TEST_H
+#ifndef CUTE_TEST_ALLOW_SUBINCLUDES
 #error "This file must not be included directly"
 #endif
 
