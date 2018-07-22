@@ -33,7 +33,7 @@ static void _set_handlers(void) {
 	SET_HANDLER_FOR(SIGABRT, act); /* abort() called */
 	SET_HANDLER_FOR(SIGINT, act); /* Ctrl-C typed */
 	SET_HANDLER_FOR(SIGQUIT, act); /* keyboard quit, Ctrl-\ (core dump) */
-	SET_HANDLER_FOR(SIGFPE, act); /* floating-point error, or any math error */
+	SET_HANDLER_FOR(SIGFPE, act); /* floating-point or math error */
 	SET_HANDLER_FOR(SIGTSTP, act); /* terminal stop */
 }
 
