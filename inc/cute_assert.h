@@ -84,15 +84,25 @@ extern int errno;
 #define CUTE_assertNotEquals(x, y) CUTE_runTimeAssert((x) != (y))
 
 /**
- * \brief Ensures that the given values compare to a result value with the given
- *        function.
+ * \brief Ensures that the given function return a truth value (!= 0) when
+ *       passed the given values.
  * \param[in] x    The first value to test
  * \param[in] y    The second value
  * \param[in] func The function to compare with
- * \param[in] ok   The expected return value
  */
-#define CUTE_assertEqualsUsing(x, y, func, ok) \
-	CUTE_runTimeAssert(func((x), (y)) == (ok))
+#define CUTE_assertEqualsUsing(x, y, func) \
+	CUTE_runTimeAssert(func((x), (y)))
+
+/**
+ * \brief Ensures that the given values compare to a result value with the given
+ *        function.
+ * \param[in] x        The first value to test
+ * \param[in] y        The second value
+ * \param[in] func     The function to compare with
+ * \param[in] expected The expected return value
+ */
+#define CUTE_assertEqualsUsingReturn(x, y, func, expected) \
+	CUTE_runTimeAssert(func((x), (y)) == (expected))
 
 /**
  * \brief Compares two string values.
