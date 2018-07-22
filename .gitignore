@@ -1,6 +1,6 @@
 # Output executables
 a.out
-test_cute
+test_CUTE
 
 # Object files
 *.o
