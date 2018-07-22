@@ -68,7 +68,9 @@ typedef struct {
 CUTE_NORETURN void CUTE_exit(void);
 
 
+/** Internal flag to allow inclusion of sub-headers, do not use. */
 #define CUTE_TEST_ALLOW_SUBINCLUDES
+
 #include "cute_result.h"
 #include "cute_case.h"
 #include "cute_suite.h"
