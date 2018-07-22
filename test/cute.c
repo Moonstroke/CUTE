@@ -104,24 +104,30 @@ void test_2__f(void) {
 }
 
 void test_assert__f(void) {
-	error("failing assertion");
+	info("failing assertion");
 	CUTE_assertEquals(1, 2);
+	error("This text should not be printed!");
 }
 void test_abort__f(void) {
-	error("call abort()");
+	info("raise SIGABRT");
 	raise(SIGABRT);
+	error("This text should not be printed!");
 }
 void test_interrupt__f(void) {
-	error("interrupt (Ctrl-C)");
+	info("interrupt (Ctrl-C)");
 	raise(SIGINT);
+	error("This text should not be printed!");
 }
 void test_quit__f(void) {
-	error("quit (Ctrl-\\)");
+	info("quit (Ctrl-\\)");
 	raise(SIGQUIT);
+	error("This text should not be printed!");
 }
 void test_tstop__f(void) {
-	error("TTY stop (Ctrl-Z)");
+	info("TTY stop (Ctrl-Z)");
 	raise(SIGTSTP);
+	error("This text should not be printed!");
 }
 void Itest_ignored__f(void) {
+	error("This text should not be printed!");
 }
