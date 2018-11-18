@@ -6,26 +6,21 @@ compiler:
   - gcc
   - clang
 
+#Use a sudo-enabled environment
+sudo: true
+
+
 # Activate builds only for master
 branches:
   only:
     - master
 
-# Enable Docker
-services:
-  - docker
 
+# Build and install dependencies
+before_script:
+  - sudo make installdeps
 
-# Use Docker image containing my other repo Clog
-before_install:
-  - docker pull joh1/clog
-  - docker run --detach --interactive --name clog joh1/clog
-
-# Fetch the project from github inside the container
-install:
-  - docker exec clog git clone https://github.com/Moonstroke/CUTE.git cute
-
-
-# Launch the tests from the container
+# Build the project and launch the tests
 script:
-  - docker exec clog /bin/sh -c 'cd cute && make && make test'
+  - make
+  - make test
