@@ -1,5 +1,6 @@
 #include "cute_test.h"
 
+#include <PUCA/funcattrs.h> /* for INLINE */
 #include <stdlib.h> /* for NULL */
 #include <time.h> /* for time_t, localtime, strftime */
 
@@ -29,8 +30,8 @@ void CUTE_logResults(const unsigned int n, const CUTE_RunResults *r[n],
 }
 
 
-static CUTE_INLINE void _gettime(const unsigned int n, char s[n],
-                                 const char *const fmt) {
+static INLINE void _gettime(const unsigned int n, char s[n],
+                            const char *const fmt) {
 	time_t t;
 	time(&t);
 	strftime(s, n, fmt, localtime(&t));
@@ -102,3 +103,6 @@ void _log_console(const unsigned int n, const CUTE_RunResults *r[n],
 		_printtest(f, "\u2514", &(r[i]->results[j]));
 	}
 }
+
+
+#include <PUCA/end.h>

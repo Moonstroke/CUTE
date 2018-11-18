@@ -25,6 +25,11 @@
 #endif
 
 
+#define HAVE_OOATTRS /* enable CTOR, MEMBER */
+#include <PUCA/funcattrs.h> /* for NOTNULL, CTOR, MEMBER */
+#include <stdbool.h> /* for bool, true, false */
+
+
 
 /** Represents the status of an executed test. */
 typedef enum {
@@ -76,13 +81,16 @@ typedef struct {
  *
  * \return An instance of \a CUTE_RunResults for \a number tests.
  */
-CUTE_CTOR CUTE_RunResults *CUTE_prepareResults(const char *title,
-                                               unsigned int number)
-CUTE_NOTNULL(1);
+CTOR CUTE_RunResults *CUTE_prepareResults(const char *title,
+                                          unsigned int number)
+NOTNULL(1);
 
 /**
  * \brief Deallocates the result of a test case.
  *
  * \param[in,out] results The results to clean up.
  */
-CUTE_MEMBER void CUTE_cleanUpResults(CUTE_RunResults *results);
+MEMBER void CUTE_cleanUpResults(CUTE_RunResults *results);
+
+
+#include <PUCA/end.h>

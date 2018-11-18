@@ -14,6 +14,7 @@
 #endif
 
 
+#include <PUCA/funcattrs.h> /* for INLINE, NOTNULL */
 #include <stdio.h> /* for FILE */
 
 #include "cute_test.h"
@@ -63,8 +64,11 @@ void CUTE_logResults(unsigned int number,
  *
  * \sa CUTE_logResults
  */
-CUTE_INLINE CUTE_NOTNULL(2)
+INLINE NOTNULL(2)
 void CUTE_printResults(unsigned int number,
                        const CUTE_RunResults *results[number]) {
 	CUTE_logResults(number, results, stdout, CUTE_FORMAT_CONSOLE);
 }
+
+
+#include <PUCA/end.h>

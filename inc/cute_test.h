@@ -12,6 +12,8 @@
 #define CUTE_TEST_H
 
 
+#include <PUCA/funcattrs.h> /* for NORETURN */
+
 #include "cute.h"
 
 
@@ -65,7 +67,10 @@ typedef struct {
  * Exits the program with the appropriate status (\c EXIT_SUCCESS if all tests
  * run passed, \c EXIT_FAILURE otherwise).
  */
-CUTE_NORETURN void CUTE_exit(void);
+NORETURN void CUTE_exit(void);
+
+
+#include <PUCA/end.h>
 
 
 /** Internal flag to allow inclusion of sub-headers, do not use. */

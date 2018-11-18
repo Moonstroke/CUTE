@@ -17,6 +17,8 @@
 #endif
 
 
+#define HAVE_OOATTRS /* enable CTOR, MEMBER */
+#include <PUCA/funcattrs.h> /* for INLINE, NOTNULL, PURE, CTOR, MEMBER */
 #include <stdbool.h> /* for bool, true, false */
 
 
@@ -45,15 +47,15 @@ typedef struct {
  *
  * \return A new test case ready to hold \a number tests.
  */
-CUTE_CTOR CUTE_TestCase *CUTE_newTestCase(const char *title,
-                                          unsigned int number) CUTE_NOTNULL(1);
+CTOR CUTE_TestCase *CUTE_newTestCase(const char *title, unsigned int number)
+NOTNULL(1);
 
 /**
  * \brief Release the memory from a test case.
  *
  * \param[in,out] case_ The test case to deallocate
  */
-CUTE_MEMBER void CUTE_freeTestCase(CUTE_TestCase *case_);
+MEMBER void CUTE_freeTestCase(CUTE_TestCase *case_);
 
 
 /**
@@ -62,7 +64,7 @@ CUTE_MEMBER void CUTE_freeTestCase(CUTE_TestCase *case_);
  * \param[in,out] case_    The test case
  * \param[in]     initiate The procedure
  */
-CUTE_MEMBER CUTE_INLINE CUTE_NOTNULL(2)
+MEMBER INLINE NOTNULL(2)
 void CUTE_setCaseInitiate(CUTE_TestCase *const case_,
                           CUTE_Proc *const initiate) {
 	case_->initiate = initiate;
@@ -74,7 +76,7 @@ void CUTE_setCaseInitiate(CUTE_TestCase *const case_,
  * \param[in,out] case_     The test case
  * \param[in]     terminate The procedure
  */
-CUTE_MEMBER CUTE_INLINE CUTE_NOTNULL(2)
+MEMBER INLINE NOTNULL(2)
 void CUTE_setCaseTerminate(CUTE_TestCase *const case_,
                            CUTE_Proc *const terminate) {
 	case_->terminate = terminate;
@@ -86,7 +88,7 @@ void CUTE_setCaseTerminate(CUTE_TestCase *const case_,
  * \param[in,out] case_ The test case
  * \param[in]     setUp The procedure
  */
-CUTE_MEMBER CUTE_INLINE CUTE_NOTNULL(2)
+MEMBER INLINE NOTNULL(2)
 void CUTE_setCaseBefore(CUTE_TestCase *const case_, CUTE_Proc *const setUp) {
 	case_->before = setUp;
 }
@@ -97,7 +99,7 @@ void CUTE_setCaseBefore(CUTE_TestCase *const case_, CUTE_Proc *const setUp) {
  * \param[in,out] case_    The test case
  * \param[in]     tearDown The procedure
  */
-CUTE_MEMBER CUTE_INLINE CUTE_NOTNULL(2)
+MEMBER INLINE NOTNULL(2)
 void CUTE_setCaseAfter(CUTE_TestCase *const case_, CUTE_Proc *const tearDown) {
 	case_->after = tearDown;
 }
@@ -115,7 +117,7 @@ void CUTE_setCaseAfter(CUTE_TestCase *const case_, CUTE_Proc *const tearDown) {
  * \return \c true if the test could be added (there was enough space left in
  *         the test case).
  */
-CUTE_MEMBER bool CUTE_addCaseTest(CUTE_TestCase *case_, CUTE_Test test);
+MEMBER bool CUTE_addCaseTest(CUTE_TestCase *case_, CUTE_Test test);
 
 
 /**
@@ -125,7 +127,7 @@ CUTE_MEMBER bool CUTE_addCaseTest(CUTE_TestCase *case_, CUTE_Test test);
  *
  * \return The title of the test case.
  */
-CUTE_MEMBER CUTE_INLINE CUTE_PURE
+MEMBER INLINE PURE
 const char *CUTE_getCaseTitle(const CUTE_TestCase *case_) {
 	return case_->title;
 }
@@ -137,7 +139,7 @@ const char *CUTE_getCaseTitle(const CUTE_TestCase *case_) {
  *
  * \return The number of unit tests in the case.
  */
-CUTE_MEMBER CUTE_INLINE CUTE_PURE
+MEMBER INLINE PURE
 unsigned int CUTE_getCaseTestsNumber(const CUTE_TestCase *case_) {
 	return case_->number;
 }
@@ -153,4 +155,7 @@ unsigned int CUTE_getCaseTestsNumber(const CUTE_TestCase *case_) {
  *
  * \return A pointer to the results of the tests.
  */
-CUTE_MEMBER CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *case_);
+MEMBER CUTE_RunResults *CUTE_runTestCase(const CUTE_TestCase *case_);
+
+
+#include <PUCA/end.h>

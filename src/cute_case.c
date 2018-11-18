@@ -1,5 +1,6 @@
 #include "cute_test.h"
 
+#include <PUCA/funcattrs.h> /* for INLINE */
 #include <signal.h> /* for sig_atomic_t, sigaction, struct sigaction, SIG* */
 #include <stdarg.h> /* for va_* */
 #include <stdlib.h> /* for malloc, free, NULL */
@@ -39,11 +40,11 @@ static void _set_handlers(void) {
 
 static void _noop(void) {}
 
-static CUTE_INLINE bool _ignore(const CUTE_Test t) {
+static INLINE bool _ignore(const CUTE_Test t) {
 	return CUTE_getTestName(t)[0] == 'I';
 }
 
-static CUTE_INLINE const char *_stripignore(const CUTE_Test t) {
+static INLINE const char *_stripignore(const CUTE_Test t) {
 	return CUTE_getTestName(t) + 1;
 }
 
@@ -122,3 +123,6 @@ end:
 	tc->terminate();
 	return r;
 }
+
+
+#include <PUCA/end.h>
