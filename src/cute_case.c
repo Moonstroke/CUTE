@@ -1,6 +1,6 @@
 #include "cute_test.h"
 
-#include <signal.h> /* for sigaction, struct sigaction, SIG* */
+#include <signal.h> /* for sig_atomic_t, sigaction, struct sigaction, SIG* */
 #include <stdarg.h> /* for va_* */
 #include <stdlib.h> /* for malloc, free, NULL */
 #include <time.h> /* for clock_t, clock, CLOCKS_PER_SEC */
