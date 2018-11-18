@@ -1,0 +1,6 @@
+[submodule "PUCA"]
+	path = PUCA
+	url = https://Moonstroke@github.com/Moonstroke/PUCA.git
+[submodule "Clog"]
+	path = Clog
+	url = https://Moonstroke@github.com/Moonstroke/Clog.git
